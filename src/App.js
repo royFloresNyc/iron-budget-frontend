@@ -2,18 +2,18 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
-import SideNavPanel from './Containers/SideNavPanel'
+import SidePanel from './Containers/SidePanel'
 import MainContainer from './Containers/MainContainer'
 
 function App() {
     return (
-        <>
-            <SideNavPanel />
+        <div className="wrapper">
+            <SidePanel />
             <Switch>
                 <Route path="/" component={MainContainer} />
             </Switch>
             
-        </>
+        </div>
     );
 }
 
