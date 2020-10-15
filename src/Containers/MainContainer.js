@@ -6,7 +6,7 @@ import Transactions from '../Containers/Transactions'
 class MainContainer extends React.Component {
     render () {
         return <div className="main-container">
-            <h3>***This is the Main Container for Rendering Components***</h3>
+            ***This is the Main Container for Rendering Components***
             <Switch>
                 <Route path='/reports' render={routerProps => <Reports/>} />
                 <Route path='/transactions' render={routerProps => <Transactions/>} />
