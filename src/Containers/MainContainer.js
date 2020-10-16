@@ -2,18 +2,29 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
-import { data } from '../data' //hard-coded data 
 
 class MainContainer extends React.Component {
     state = {
         transactions: [],
         transaction_types: [],
         expense_categories: [],
+        debit_categories: [],
+        credit_categories: [],
         income_categories: [],
     }
 
-    componentDidMount(){
-        this.setState(data)
+    componentDidMount = () =>{
+        // this.setState(data)
+        this.fetchUserData(1)
+    }
+
+    fetchUserData = (userId) => {
+        fetch(`http://localhost:3000/users/${userId}`)
+            .then(resp => resp.json())
+            .then(userData => {
+                this.setState(userData)
+                // console.log(userData)
+            })
     }
 
     submitTransaction = (tObject) => {

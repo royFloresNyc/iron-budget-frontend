@@ -49,8 +49,8 @@ class Transactions extends React.Component{
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <hr/>
             { this.state.showForm ? 
-                <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Expense") : this.getTransactionTypeId("Income")}
-                    categories={this.state.expBtnClicked ? this.props.expense_categories : this.props.income_categories}
+                <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
+                    categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
                     submitHandler={this.props.submitHandler}
                     hideForm={this.hideForm}/> 
                 : null}
