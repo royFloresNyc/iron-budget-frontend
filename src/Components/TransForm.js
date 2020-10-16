@@ -5,7 +5,7 @@ class TransForm extends React.Component {
         name: "",
         amount: "",
         t_date: "",
-        category_id: 1,
+        category_id: "",
     }
 
     setCategories = () => {
@@ -15,24 +15,30 @@ class TransForm extends React.Component {
     changeHandler = (e) => {
         this.setState( {[e.target.name]: e.target.value })
     }
-    submitHandler = (e) => {
+    localSubmitHandler = (e) => {
         e.preventDefault()
-        // Why is preventDefault not working? 
-        
-        // const transactionType = { transaction_type_id: e.target.id }
-
-        console.log(e.target.id)
+        const transactionType = { transaction_type_id: e.target.id }
+        const tObject = {...this.state, ...transactionType}
+        this.props.submitHandler(tObject)
+        this.setState(() => {
+            return {
+                name: "",
+                amount: "",
+                t_date: "",
+                category_id: "",
+            }
+        })
     }
 
     render() {
-        return <form className="trans-form" id={this.props.typeId}>
+        return <form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
             <input type="datetime-local" 
                 name="t_date" 
                 placeholder="" 
                 value={this.state.t_date} 
                 onChange={this.changeHandler}/>
             <input type="number" 
-                name="amount" 
+                name="amount"
                 placeholder="Amount" 
                 value={this.state.amount}
                 onChange={this.changeHandler}/>
@@ -47,7 +53,8 @@ class TransForm extends React.Component {
                 onChange={this.changeHandler}>
                 {this.setCategories()}
             </select>
-            <input type="submit" onSubmit={this.submitHandler}/>
+            <input type="submit"/>
+            <h3 onClick={this.props.hideForm}>x</h3>
         </form>
     }
 }

@@ -16,12 +16,16 @@ class MainContainer extends React.Component {
         this.setState(data)
     }
 
+    submitTransaction = (tObject) => {
+        console.log('submit this: ', tObject)
+    }
+
     render () {
         return <div className="main-container">
             ***This is the Main Container for Rendering Components***
             <Switch>
                 <Route path='/reports' render={() => <Reports/>} />
-                <Route path='/transactions' render={() => <Transactions { ...this.state }/>} />
+                <Route path='/transactions' render={() => <Transactions { ...this.state } submitHandler={this.submitTransaction}/>} />
             </Switch>
         </div>
         

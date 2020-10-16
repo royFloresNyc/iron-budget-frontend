@@ -38,6 +38,10 @@ class Transactions extends React.Component{
         return this.props.transaction_types.find(obj => obj.name === name).id
     }
 
+    hideForm = () => {
+        this.setState({ showForm: false})
+    }
+
     render() {
         return <div className="container transactions">
             <h3>Current Balance: $"some amount"</h3>
@@ -46,7 +50,9 @@ class Transactions extends React.Component{
             <hr/>
             { this.state.showForm ? 
                 <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Expense") : this.getTransactionTypeId("Income")}
-                    categories={this.state.expBtnClicked ? this.props.expense_categories : this.props.income_categories}/> 
+                    categories={this.state.expBtnClicked ? this.props.expense_categories : this.props.income_categories}
+                    submitHandler={this.props.submitHandler}
+                    hideForm={this.hideForm}/> 
                 : null}
             
             {this.renderTransactions(this.props.transactions)}

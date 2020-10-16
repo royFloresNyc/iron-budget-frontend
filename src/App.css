@@ -137,3 +137,8 @@ div.amount {
     width: 30%;
     text-align: right;
 }
+
+form > h3 {
+    text-align: right;
+    margin-bottom: 0px;
+}
