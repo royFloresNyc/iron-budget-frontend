@@ -90,6 +90,10 @@ a:hover {
     color: black;
 }
 
+div.container {
+    overflow: scroll;
+}
+
 .trans-button {
     display: inline-block;
     background-color: gray;
@@ -106,4 +110,30 @@ a:hover {
     border-radius: 3px;
     width: 80%;
     padding: 20px;
+}
+
+div.transaction {
+    display: inline-block;
+    width: 80%;
+    border-bottom: 1px solid black;
+}
+
+div.transaction > div {
+    display: inline-block;
+    height: 50px;
+}
+
+div.date {
+    width: 30%;
+    text-align: left;
+}
+
+div.name {
+    width: 40%;
+    text-align: left;
+}
+
+div.amount {
+    width: 30%;
+    text-align: right;
 }

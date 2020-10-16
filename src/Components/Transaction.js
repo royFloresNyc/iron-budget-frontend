@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Transaction = () => {
+const Transaction = ({ transaction }) => {
+    
     return <div className="transaction">
-        This will render a transaction
+        <div className="date">{transaction.t_date}</div>
+        <div className="name">{transaction.name}</div>
+        <div className="amount">${transaction.amount}</div>
     </div>
 }
 
