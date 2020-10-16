@@ -90,7 +90,8 @@ a:hover {
     color: black;
 }
 
-div.container {
+div.trans-container{
+    max-height: 80vh;
     overflow: scroll;
 }
 

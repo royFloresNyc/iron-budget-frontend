@@ -43,8 +43,8 @@ class Transactions extends React.Component{
     }
 
     render() {
-        return <div className="container transactions">
-            <h3>Current Balance: $"some amount"</h3>
+        return <div className="trans-container">
+            <h3>Account Balance: ${this.props.account_balance}</h3>
             <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <hr/>
@@ -54,8 +54,9 @@ class Transactions extends React.Component{
                     submitHandler={this.props.submitHandler}
                     hideForm={this.hideForm}/> 
                 : null}
-            
-            {this.renderTransactions(this.props.transactions)}
+            <div className="transactions">
+                {this.renderTransactions(this.props.transactions)}
+            </div>
         </div>
     }
 }

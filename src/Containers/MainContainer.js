@@ -14,7 +14,6 @@ class MainContainer extends React.Component {
     }
 
     componentDidMount = () =>{
-        // this.setState(data)
         this.fetchUserData(1)
     }
 
@@ -23,7 +22,6 @@ class MainContainer extends React.Component {
             .then(resp => resp.json())
             .then(userData => {
                 this.setState(userData)
-                // console.log(userData)
             })
     }
 
@@ -38,8 +36,7 @@ class MainContainer extends React.Component {
                 <Route path='/reports' render={() => <Reports/>} />
                 <Route path='/transactions' render={() => <Transactions { ...this.state } submitHandler={this.submitTransaction}/>} />
             </Switch>
-        </div>
-        
+        </div> 
     }
 }
 
