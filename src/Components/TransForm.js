@@ -5,12 +5,12 @@ class TransForm extends React.Component {
         name: "",
         amount: "",
         t_date: "",
-        category_id: "",
+        category_id: "1",
     }
 
     render() {
         return <form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
-            <input type="datetime-local" 
+            <input type="date" 
                 name="t_date" 
                 placeholder="" 
                 value={this.state.t_date} 
@@ -52,7 +52,8 @@ class TransForm extends React.Component {
     localSubmitHandler = (e) => {
         e.preventDefault()
         const transactionType = { transaction_type_id: e.target.id }
-        const tObject = {...this.state, ...transactionType}
+        const userId = { user_id: this.props.userId }
+        const tObject = {...this.state, ...transactionType, ...userId}
 
         this.props.transactionToEdit ? this.props.editHandler(tObject) : this.props.submitHandler(tObject)
 
@@ -72,20 +73,6 @@ class TransForm extends React.Component {
     changeHandler = (e) => {
         this.setState( {[e.target.name]: e.target.value })
     }
-    // localSubmitHandler = (e) => {
-    //     e.preventDefault()
-    //     const transactionType = { transaction_type_id: e.target.id }
-    //     const tObject = {...this.state, ...transactionType}
-    //     this.props.submitHandler(tObject)
-    //     this.setState(() => {
-    //         return {
-    //             name: "",
-    //             amount: "",
-    //             t_date: "",
-    //             category_id: "",
-    //         }
-    //     })
-    // }
 }
 
 export default TransForm

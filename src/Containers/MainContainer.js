@@ -33,11 +33,6 @@ class MainContainer extends React.Component {
     }
 
     fetchUserData = (userId) => {
-        // fetch(`http://localhost:3000/users/${userId}`)
-        //     .then(resp => resp.json())
-        //     .then(userData => {
-        //         this.setState(userData)
-        //     })
         const url = `http://localhost:3000/users/${userId}`
         const fetchPromise = this.connectToDb(url)
         fetchPromise.then(userData => {
@@ -46,48 +41,58 @@ class MainContainer extends React.Component {
     }
 
     submitTransaction = (tObject) => {
-        console.log('submit (POST) this: ', tObject)
-        // const url = 'http://localhost:3000/transactions'
-        // const fetchPromise = this.connectToDb(url, "POST", tObject)
-        // fetchPromise.then(data => console.log('Deleted this object: ', data))
-
-        this.setState({ transactions: [tObject, ...this.state.transactions]}) 
+        const url = 'http://localhost:3000/transactions'
+        const fetchPromise = this.connectToDb(url, "POST", tObject)
+        fetchPromise.then(data => {
+            const newBalance = data.transaction_type_id === 1 ? this.state.account_balance + data.amount : this.state.account_balance - data.amount
+            this.setState({ transactions: [data, ...this.state.transactions] , account_balance: newBalance}) 
+        })
     }
 
-    deleteTransaction = (transactionId) => {
-        console.log('delete this id: ', transactionId)
-        // const url = 'http://localhost:3000/transactions/' + transactionId
-        // const fetchPromise = this.connectToDb(url, "DELETE")
-        // fetchPromise.then(data => console.log('Deleted this object: ', data))
+    deleteTransaction = (transaction) => {
+        console.log('delete this id: ', transaction)
+        const url = 'http://localhost:3000/transactions/' + transaction.id
+        const fetchPromise = this.connectToDb(url, "DELETE", transaction)
+        fetchPromise.then(data => {
+            const newArray = [...this.state.transactions]
+            const index = newArray.findIndex(trans => trans.id === data.id)
+            newArray.splice(index, 1)
+            const newBalance = data.transaction_type_id === 1 ? this.state.account_balance - data.amount : this.state.account_balance + data.amount
+            this.setState({ transactions: [data, ...this.state.transactions] , account_balance: newBalance}) 
+        })
 
-        const newArray = [...this.state.transactions]
-        const index = newArray.findIndex(trans => trans.id === transactionId)
-        newArray.splice(index, 1)
-        this.setState( {transactions: newArray})
+        
     }
 
     editTransaction = (tObject) => {
-        console.log('Send a PATCH for this: ', tObject)
-        
-        // const url = 'http://localhost:3000/transactions/' + tObject.id
-        // const fetchPromise = this.connectToDb(url, "PATCH", tObject)
-        // fetchPromise.then(data => console.log('Added this object to db: ', data))
-
-        const newArray = [...this.state.transactions]
-        const index = newArray.findIndex(trans => trans.id === tObject.id)
-        newArray.splice(index, 1, tObject)
-        this.setState( {transactions: newArray})
+        const url = 'http://localhost:3000/transactions/' + tObject.id
+        const fetchPromise = this.connectToDb(url, "PATCH", tObject)
+        fetchPromise.then(data => {
+            const newArray = [...this.state.transactions]
+            const index = newArray.findIndex(trans => trans.id === data.id)
+            const oldObj = this.state.transactions[index]
+            newArray.splice(index, 1, data)
+            if (data.amount === oldObj.amount && data.transaction_type_id === oldObj.transaction_type_id){
+                this.setState( {transactions: newArray})
+            } else {
+// I think Math on this this is wrong ???====================================================================
+                //const diff = Math.abs(data.amount - oldObj.amount)
+                const newBalance = data.transaction_type_id === 1 ? this.state.account_balance + data.amount : this.state.account_balance - data.amount
+                this.setState({ transactions: newArray , account_balance: newBalance}) 
+            }
+        }) 
     }
 
     connectToDb = (url, fetchMethod, object) => {
         const options = {
             method: fetchMethod,
-            header: {
+            headers: {
                 'content-type': 'application/json',
                 accepts: 'application/json',
             },
             body: JSON.stringify(object)
         }
+        
         if(fetchMethod || object ){
             return fetch(url, options).then(resp => resp.json())
         } else {

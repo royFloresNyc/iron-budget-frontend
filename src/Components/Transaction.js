@@ -7,7 +7,7 @@ const Transaction = ({ transaction, deleteHandler, editClickHandler }) => {
         <div className="name">{transaction.name}</div>
         <div className="amount">${transaction.amount}</div>
         <p style={{display: "inline"}} onClick={() => editClickHandler(transaction)}> Edit </p>
-        <p style={{display: "inline"}} onClick={() => deleteHandler(transaction.id)}> Delete </p>
+        <p style={{display: "inline"}} onClick={() => deleteHandler(transaction)}> Delete </p>
     </div>
 }
 

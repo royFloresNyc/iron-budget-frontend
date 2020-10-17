@@ -25,6 +25,7 @@ class Transactions extends React.Component{
                     editHandler={this.props.editHandler}
                     hideForm={this.hideForm}
                     transactionToEdit={this.state.transactionToEdit}
+                    userId={this.props.id}
                 /> : null}
             <div className="transactions">
                 {this.renderTransactions(this.props.transactions)}
