@@ -8,28 +8,6 @@ class TransForm extends React.Component {
         category_id: "",
     }
 
-    setCategories = () => {
-        return this.props.categories.map((catObj, indx) => <option key={indx} value={catObj.id}>{catObj.name}</option>)
-    }
-
-    changeHandler = (e) => {
-        this.setState( {[e.target.name]: e.target.value })
-    }
-    localSubmitHandler = (e) => {
-        e.preventDefault()
-        const transactionType = { transaction_type_id: e.target.id }
-        const tObject = {...this.state, ...transactionType}
-        this.props.submitHandler(tObject)
-        this.setState(() => {
-            return {
-                name: "",
-                amount: "",
-                t_date: "",
-                category_id: "",
-            }
-        })
-    }
-
     render() {
         return <form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
             <input type="datetime-local" 
@@ -57,6 +35,57 @@ class TransForm extends React.Component {
             <h3 onClick={this.props.hideForm}>x</h3>
         </form>
     }
+
+    componentDidMount = () => {
+        if(this.props.transactionToEdit) {
+            this.setState(this.props.transactionToEdit)
+        }
+    }
+
+    setCategories = () => {
+        return this.props.categories.map((catObj, indx) => <option key={indx} value={catObj.id}>{catObj.name}</option>)
+    }
+
+    changeHandler = (e) => {
+        this.setState( {[e.target.name]: e.target.value })
+    }
+    localSubmitHandler = (e) => {
+        e.preventDefault()
+        const transactionType = { transaction_type_id: e.target.id }
+        const tObject = {...this.state, ...transactionType}
+
+        this.props.transactionToEdit ? this.props.editHandler(tObject) : this.props.submitHandler(tObject)
+
+        this.setState(() => {
+            return {
+                name: "",
+                amount: "",
+                t_date: "",
+                category_id: "",
+            }
+        }, this.props.hideForm())
+    }
+    setCategories = () => {
+        return this.props.categories.map((catObj, indx) => <option key={indx} value={catObj.id}>{catObj.name}</option>)
+    }
+
+    changeHandler = (e) => {
+        this.setState( {[e.target.name]: e.target.value })
+    }
+    // localSubmitHandler = (e) => {
+    //     e.preventDefault()
+    //     const transactionType = { transaction_type_id: e.target.id }
+    //     const tObject = {...this.state, ...transactionType}
+    //     this.props.submitHandler(tObject)
+    //     this.setState(() => {
+    //         return {
+    //             name: "",
+    //             amount: "",
+    //             t_date: "",
+    //             category_id: "",
+    //         }
+    //     })
+    // }
 }
 
 export default TransForm

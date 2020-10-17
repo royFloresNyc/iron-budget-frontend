@@ -8,7 +8,34 @@ class Transactions extends React.Component{
     state = {
         expBtnClicked: false,
         incmBtnClicked: false,
-        showForm: false
+        showForm: false,
+        transactionToEdit: undefined
+    }
+
+    render() {
+        return <div className="trans-container">
+            <h3>Account Balance: ${this.props.account_balance}</h3>
+            <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
+            <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
+            <hr/>
+            { this.state.showForm ? 
+                <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
+                    categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
+                    submitHandler={this.props.submitHandler}
+                    editHandler={this.props.editHandler}
+                    hideForm={this.hideForm}
+                    transactionToEdit={this.state.transactionToEdit}
+                /> : null}
+            <div className="transactions">
+                {this.renderTransactions(this.props.transactions)}
+            </div>
+        </div>
+    }
+
+    renderTransactions = (tList) => {
+        return tList.map((trans, indx) => <Transaction key={indx} 
+            transaction={trans} deleteHandler={this.props.deleteHandler}
+            editClickHandler={this.editClickHandler}/>)
     }
 
     transactionBtnHandler = (e) => {
@@ -30,35 +57,32 @@ class Transactions extends React.Component{
         })
     }
 
-    renderTransactions = (tList) => {
-        return tList.map((trans, indx) => <Transaction key={indx} transaction={trans} />)
-    }
-
     getTransactionTypeId = (name) => {
         return this.props.transaction_types.find(obj => obj.name === name).id
     }
 
     hideForm = () => {
-        this.setState({ showForm: false})
+        this.setState({ showForm: false, transactionToEdit: undefined })
     }
 
-    render() {
-        return <div className="trans-container">
-            <h3>Account Balance: ${this.props.account_balance}</h3>
-            <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
-            <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
-            <hr/>
-            { this.state.showForm ? 
-                <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
-                    categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
-                    submitHandler={this.props.submitHandler}
-                    hideForm={this.hideForm}/> 
-                : null}
-            <div className="transactions">
-                {this.renderTransactions(this.props.transactions)}
-            </div>
-        </div>
+    editClickHandler = (transaction) => {
+        if(transaction.transaction_type_id === 1){
+            this.setState({
+                expBtnClicked: false,
+                incmBtnClicked: true,
+                showForm: true,
+                transactionToEdit: transaction
+            })
+        } else {
+            this.setState({
+                expBtnClicked: true,
+                incmBtnClicked: false,
+                showForm: true,
+                transactionToEdit: transaction
+            })
+        }
     }
+
 }
 
 export default Transactions
