@@ -49,6 +49,7 @@ class TransForm extends React.Component {
     changeHandler = (e) => {
         this.setState( {[e.target.name]: e.target.value })
     }
+
     localSubmitHandler = (e) => {
         e.preventDefault()
         const transactionType = { transaction_type_id: e.target.id }
@@ -66,13 +67,13 @@ class TransForm extends React.Component {
             }
         }, this.props.hideForm())
     }
-    setCategories = () => {
-        return this.props.categories.map((catObj, indx) => <option key={indx} value={catObj.id}>{catObj.name}</option>)
-    }
+    // setCategories = () => {
+    //     return this.props.categories.map((catObj, indx) => <option key={indx} value={catObj.id}>{catObj.name}</option>)
+    // }
 
-    changeHandler = (e) => {
-        this.setState( {[e.target.name]: e.target.value })
-    }
+    // changeHandler = (e) => {
+    //     this.setState( {[e.target.name]: e.target.value })
+    // }
 }
 
 export default TransForm

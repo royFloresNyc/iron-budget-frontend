@@ -2,22 +2,20 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
+import { UserInfo } from '../Containers/UserInfo'
 
 class MainContainer extends React.Component {
     state = {
-        transactions: [],
-        transaction_types: [],
-        expense_categories: [],
-        debit_categories: [],
-        credit_categories: [],
-        income_categories: [],
+        transactions: []
     }
 
     componentDidMount = () =>{
-        this.fetchUserData(1)
+        this.fetchUserData(2)
     }
 
     render () {
+        const { id, username, first_name, last_name, address, account_balance, banks } = this.state
+        const user = { id, username, first_name, last_name, address, account_balance, banks }
         return <div className="main-container">
             ***This is the Main Container for Rendering Components***
             <Switch>
@@ -28,6 +26,7 @@ class MainContainer extends React.Component {
                         deleteHandler={this.deleteTransaction}
                         editHandler={this.editTransaction}
                     />} />
+                <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
             </Switch>
         </div> 
     }
@@ -81,6 +80,14 @@ class MainContainer extends React.Component {
                 this.setState({ transactions: newArray , account_balance: newBalance}) 
             }
         }) 
+    }
+
+    submitUserInfo = (userObj) => {
+        console.log('submit this user object!!!!: ', userObj)
+
+        const url = `http://localhost:3000/users/${userObj.id}`
+        const fetchPromise = this.connectToDb(url, "PATCH", userObj)
+        fetchPromise.then(dbObj => this.setState(dbObj))
     }
 
     connectToDb = (url, fetchMethod, object) => {
