@@ -10,7 +10,7 @@ class MainContainer extends React.Component {
     }
 
     componentDidMount = () =>{
-        this.fetchUserData(2)
+        this.fetchUserData(1)
     }
 
     render () {
@@ -43,21 +43,21 @@ class MainContainer extends React.Component {
         const url = 'http://localhost:3000/transactions'
         const fetchPromise = this.connectToDb(url, "POST", tObject)
         fetchPromise.then(data => {
-            const newBalance = data.transaction_type_id === 1 ? this.state.account_balance + data.amount : this.state.account_balance - data.amount
-            this.setState({ transactions: [data, ...this.state.transactions] , account_balance: newBalance}) 
+            const newArray = [data, ...this.state.transactions]
+            const newBalance = this.getTotal(newArray)
+            this.setState({ transactions:  newArray, account_balance: newBalance}) 
         })
     }
 
     deleteTransaction = (transaction) => {
-        console.log('delete this id: ', transaction)
         const url = 'http://localhost:3000/transactions/' + transaction.id
         const fetchPromise = this.connectToDb(url, "DELETE", transaction)
         fetchPromise.then(data => {
             const newArray = [...this.state.transactions]
             const index = newArray.findIndex(trans => trans.id === data.id)
             newArray.splice(index, 1)
-            const newBalance = data.transaction_type_id === 1 ? this.state.account_balance - data.amount : this.state.account_balance + data.amount
-            this.setState({ transactions: [data, ...this.state.transactions] , account_balance: newBalance}) 
+            const newBalance = this.getTotal(newArray)
+            this.setState({ transactions: newArray , account_balance: newBalance}) 
         })
 
         
@@ -69,17 +69,18 @@ class MainContainer extends React.Component {
         fetchPromise.then(data => {
             const newArray = [...this.state.transactions]
             const index = newArray.findIndex(trans => trans.id === data.id)
-            const oldObj = this.state.transactions[index]
             newArray.splice(index, 1, data)
-            if (data.amount === oldObj.amount && data.transaction_type_id === oldObj.transaction_type_id){
-                this.setState( {transactions: newArray})
-            } else {
-// I think Math on this this is wrong ???====================================================================
-                //const diff = Math.abs(data.amount - oldObj.amount)
-                const newBalance = data.transaction_type_id === 1 ? this.state.account_balance + data.amount : this.state.account_balance - data.amount
-                this.setState({ transactions: newArray , account_balance: newBalance}) 
-            }
+            const newBalance = this.getTotal(newArray)
+            this.setState({ transactions: newArray , account_balance: newBalance}) 
         }) 
+    }
+
+    getTotal = (tArray) => {
+        const credit = tArray.filter(trans => trans.transaction_type_id === 1)
+            .reduce((sum, transaction) => sum + transaction.amount ,0)
+        const debit = tArray.filter(trans => trans.transaction_type_id === 2)
+            .reduce((sum, transaction) => sum + transaction.amount ,0)
+        return (credit - debit)
     }
 
     submitUserInfo = (userObj) => {
