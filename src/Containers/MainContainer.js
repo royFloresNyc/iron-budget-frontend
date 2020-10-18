@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
 import { UserInfo } from '../Containers/UserInfo'
+import BankMapContainer from '../Containers/BankMapContainer'
 
 class MainContainer extends React.Component {
     state = {
@@ -27,6 +28,7 @@ class MainContainer extends React.Component {
                         editHandler={this.editTransaction}
                     />} />
                 <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
+                <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
             </Switch>
         </div> 
     }
