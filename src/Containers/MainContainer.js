@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
+import TestLogin from '../Components/TestLogin'
 
 class MainContainer extends React.Component {
     state = {
@@ -28,6 +29,7 @@ class MainContainer extends React.Component {
                         deleteHandler={this.deleteTransaction}
                         editHandler={this.editTransaction}
                     />} />
+                <Route path='/testLogin' render = {() => <TestLogin/>}/>
             </Switch>
         </div> 
     }
@@ -47,11 +49,19 @@ class MainContainer extends React.Component {
 
     submitTransaction = (tObject) => {
         console.log('submit (POST) this: ', tObject)
-        // const url = 'http://localhost:3000/transactions'
-        // const fetchPromise = this.connectToDb(url, "POST", tObject)
-        // fetchPromise.then(data => console.log('Deleted this object: ', data))
-
         this.setState({ transactions: [tObject, ...this.state.transactions]}) 
+        let newObj = [...tObject, {user_id: 1}]
+        let options = {
+            method: "POST",
+            header: {
+                'content-type': 'application/json',
+                "accept": 'application/json',
+            },
+            body: JSON.stringify(newObj)
+        }
+        console.log(newObj)
+        // fetch(`http://localhost:3000/transactions`, options)
+
     }
 
     deleteTransaction = (transactionId) => {
