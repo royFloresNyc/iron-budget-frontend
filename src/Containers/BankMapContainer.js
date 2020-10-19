@@ -1,42 +1,35 @@
 import React from 'react'
-// import ENV from '../.env'
+import Map from '../Components/Map'
 
 class BankMapContainer extends React.Component {
 //--State---------------------------------------------------------------------------------------
     state = {
-        searchValues: 'chase'
+        searchValue: 'bank'
     }
 //--Component-Manipulation-----------------------------------------------------------------------
-    // componentDidMount = () => {
+    componentDidMount() {
+        if(this.props.banks){
+            this.setState({searchValue: this.getBankName()})
+        }
+    }
 
-    //     console.log('bank props: ', this.props.banks)
-    //     // const myBank = this.props.banks[0].name
-    //     // this.setState({searchValues: myBank})
-    // }
-    // "geo_location": {
-    //     "lat": 40.6162746,
-    //     "lng": -73.9965698
-    //     }
+    clickHandler = (searchVal) => {
+        this.setState({ searchValue: searchVal})
+    }
 
-    // console.log('geo location of addres:' , props.geoLocation)
-    // this.props.geoLocation.lat, this.props.geoLocation.lng
-
-    //7205+17th+Avenue+Brooklyn+NY
-    render() {
-        console.log("insideRender")
-        if(this.props.geoLocation)
-        {
+    getBankName = () => {
+        return (this.props.banks ? this.props.banks.map(bank => bank.name)[0] : 'bank')
+    }
+  
+    render(){
         return (
-            <iframe
-            title="map"
-            width="600"
-            height="450"
-            src={`https://www.google.com/maps/embed/v1/search?key=${process.env.REACT_APP_MAPS_KEY}
-            &zoom=15
-            &q=${this.state.searchValues}`} >
-            </iframe>
-        )}
-        else{return <h1>LOADING</h1>}
+            <div>
+                <div className="map-btn" onClick={() => this.clickHandler(this.getBankName())}>My Bank</div>
+                <div className="map-btn" onClick={() => this.clickHandler("ATM")}>ATM</div>
+                <div className="map-btn" onClick={() => this.clickHandler("Banks")}>Other Banks</div>
+                <Map searchVal={this.state.searchValue} />
+            </div>
+        )
     }
 }
 

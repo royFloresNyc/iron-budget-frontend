@@ -95,7 +95,7 @@ div.trans-container{
     overflow: scroll;
 }
 
-div.trans-button, div.edit-info-btn {
+div.trans-button, div.edit-info-btn , div.map-btn{
     display: inline-block;
     background-color: lightgray;
     width: 300px;
@@ -103,6 +103,10 @@ div.trans-button, div.edit-info-btn {
     margin: 5px;
     border: 1px solid black;
     border-radius: 3px;
+}
+
+div.map-btn {
+    width: 30%;
 }
 
 .trans-form, div.user-form {
