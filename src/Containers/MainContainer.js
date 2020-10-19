@@ -4,6 +4,7 @@ import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
 import { UserInfo } from '../Containers/UserInfo'
 import BankMapContainer from '../Containers/BankMapContainer'
+import TestLogin from '../Components/TestLogin'
 
 class MainContainer extends React.Component {
     state = {
@@ -29,6 +30,7 @@ class MainContainer extends React.Component {
                     />} />
                 <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
                 <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
+                <Route path='/testLogin' render = {() => <TestLogin/>}/>
             </Switch>
         </div> 
     }
