@@ -14,7 +14,6 @@ class Transactions extends React.Component{
 
     render() {
         return <div className="trans-container">
-            <h3>Account Balance: ${this.props.account_balance}</h3>
             <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <hr/>
@@ -25,6 +24,7 @@ class Transactions extends React.Component{
                     editHandler={this.props.editHandler}
                     hideForm={this.hideForm}
                     transactionToEdit={this.state.transactionToEdit}
+                    userId={this.props.id}
                 /> : null}
             <div className="transactions">
                 {this.renderTransactions(this.props.transactions)}

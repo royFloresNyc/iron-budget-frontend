@@ -6,8 +6,13 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+<<<<<<< HEAD
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+=======
+    "dotenv": "^8.2.0",
+    "chart.js": "^2.9.3",
+>>>>>>> main
     "mathjs": "^7.5.1",
     "moment": "^2.29.1",
     "plaid": "^8.0.0",

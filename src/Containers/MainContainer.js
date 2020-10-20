@@ -2,10 +2,13 @@ import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
-import TestLogin from '../Components/TestLogin'
+import { UserInfo } from '../Containers/UserInfo'
+import BankMapContainer from '../Containers/BankMapContainer'
+import SidePanel from './SidePanel'
 
 class MainContainer extends React.Component {
     state = {
+<<<<<<< HEAD
         transactions: [],
         transaction_types: [],
         expense_categories: [],
@@ -35,6 +38,36 @@ class MainContainer extends React.Component {
                 <Route path='/testLogin' render = {() => <TestLogin token={this.state.token}/>}/>
             </Switch>
         </div> 
+=======
+        transactions: []
+    }
+
+    componentDidMount = () =>{
+        this.fetchUserData(this.props.currentUser.id)
+    }
+
+    render () {
+        const { id, username, first_name, last_name, address, account_balance, banks } = this.state
+        const user = { id, username, first_name, last_name, address, account_balance, banks }
+        return (
+            <div className="wrapper">
+                <SidePanel accountBalance={this.state.account_balance} logOutHandler={this.props.logOutHandler}/>
+                <div className="main-view">
+                    <Switch>
+                        <Route path='/reports' render={() => <Reports/>} />
+                        <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
+                        <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
+                        <Route path={'/' || '/transactions'} render={() => 
+                            <Transactions { ...this.state } 
+                                submitHandler={this.submitTransaction}
+                                deleteHandler={this.deleteTransaction}
+                                editHandler={this.editTransaction}
+                            />} />
+                    </Switch>
+                </div> 
+            </div>
+        )
+>>>>>>> main
     }
     // fetchLinkToken = (userId) => {
 
@@ -56,11 +89,6 @@ class MainContainer extends React.Component {
     //     .catch(console.log)
     // } 
     fetchUserData = (userId) => {
-        // fetch(`http://localhost:3000/users/${userId}`)
-        //     .then(resp => resp.json())
-        //     .then(userData => {
-        //         this.setState(userData)
-        //     })
         const url = `http://localhost:3000/users/${userId}`
         const fetchPromise = this.connectToDb(url)
         fetchPromise.then(userData => {
@@ -69,6 +97,7 @@ class MainContainer extends React.Component {
     }
 
     submitTransaction = (tObject) => {
+<<<<<<< HEAD
         this.setState({ transactions: [tObject, ...this.state.transactions]}) 
         let newObj = [...tObject, {user_id: 1}]
         let options = {
@@ -87,34 +116,76 @@ class MainContainer extends React.Component {
         // const url = 'http://localhost:3000/transactions/' + transactionId
         // const fetchPromise = this.connectToDb(url, "DELETE")
         // fetchPromise.then(data => console.log('Deleted this object: ', data))
+=======
+        const url = 'http://localhost:3000/transactions'
+        const fetchPromise = this.connectToDb(url, "POST", tObject)
+        fetchPromise.then(data => {
+            const newArray = [data, ...this.state.transactions]
+            const newBalance = this.getTotal(newArray)
+            this.setState({ transactions:  newArray, account_balance: newBalance}) 
+        })
+    }
 
-        const newArray = [...this.state.transactions]
-        const index = newArray.findIndex(trans => trans.id === transactionId)
-        newArray.splice(index, 1)
-        this.setState( {transactions: newArray})
+    deleteTransaction = (transaction) => {
+        const url = 'http://localhost:3000/transactions/' + transaction.id
+        const fetchPromise = this.connectToDb(url, "DELETE", transaction)
+        fetchPromise.then(data => {
+            const newArray = [...this.state.transactions]
+            const index = newArray.findIndex(trans => trans.id === data.id)
+            newArray.splice(index, 1)
+            const newBalance = this.getTotal(newArray)
+            this.setState({ transactions: newArray , account_balance: newBalance}) 
+        })
+>>>>>>> main
+
+        
     }
 
     editTransaction = (tObject) => {
+<<<<<<< HEAD
         
         // const url = 'http://localhost:3000/transactions/' + tObject.id
         // const fetchPromise = this.connectToDb(url, "PATCH", tObject)
         // fetchPromise.then(data => console.log('Added this object to db: ', data))
+=======
+        const url = 'http://localhost:3000/transactions/' + tObject.id
+        const fetchPromise = this.connectToDb(url, "PATCH", tObject)
+        fetchPromise.then(data => {
+            const newArray = [...this.state.transactions]
+            const index = newArray.findIndex(trans => trans.id === data.id)
+            newArray.splice(index, 1, data)
+            const newBalance = this.getTotal(newArray)
+            this.setState({ transactions: newArray , account_balance: newBalance}) 
+        }) 
+    }
 
-        const newArray = [...this.state.transactions]
-        const index = newArray.findIndex(trans => trans.id === tObject.id)
-        newArray.splice(index, 1, tObject)
-        this.setState( {transactions: newArray})
+    getTotal = (tArray) => {
+        const credit = tArray.filter(trans => trans.transaction_type_id === 1)
+            .reduce((sum, transaction) => sum + transaction.amount ,0)
+        const debit = tArray.filter(trans => trans.transaction_type_id === 2)
+            .reduce((sum, transaction) => sum + transaction.amount ,0)
+        return (credit - debit)
+    }
+
+    submitUserInfo = (userObj) => {
+        console.log('submit this user object!!!!: ', userObj)
+>>>>>>> main
+
+        const url = `http://localhost:3000/users/${userObj.id}`
+        const fetchPromise = this.connectToDb(url, "PATCH", userObj)
+        fetchPromise.then(dbObj => this.setState(dbObj))
     }
 
     connectToDb = (url, fetchMethod, object) => {
         const options = {
             method: fetchMethod,
-            header: {
+            headers: {
                 'content-type': 'application/json',
                 accepts: 'application/json',
             },
             body: JSON.stringify(object)
         }
+        
         if(fetchMethod || object ){
             return fetch(url, options).then(resp => resp.json())
         } else {

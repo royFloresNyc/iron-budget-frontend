@@ -1,15 +1,15 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = ({logOutHandler}) => {
     return (
         <div className='nav-bar'>
             <ul className="nav">
-                <li><NavLink to='/reports'>Reports</NavLink></li>
-                <li><NavLink to='/transactions'>Transactions</NavLink></li>
-                <li><NavLink to=''>Navigation Link</NavLink></li>
-                <li><NavLink to=''>Navigation Link</NavLink></li>
-                <li><NavLink to='/testLogin'>Test Login</NavLink></li>
+                <NavLink to='/reports'><li>Reports</li></NavLink>
+                <NavLink to='/transactions'><li>Transactions</li></NavLink>
+                <NavLink to='/myInfo'><li>My Info</li></NavLink>
+                <NavLink to='/myBank'><li>My Bank</li></NavLink>
+                <NavLink to='/'><li onClick={logOutHandler}>Log Out</li></NavLink>
             </ul>
         </div>
     )
