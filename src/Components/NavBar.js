@@ -5,11 +5,11 @@ const NavBar = ({logOutHandler}) => {
     return (
         <div className='nav-bar'>
             <ul className="nav">
-                <li><NavLink to='/reports'>Reports</NavLink></li>
-                <li><NavLink to='/transactions'>Transactions</NavLink></li>
-                <li><NavLink to='/myInfo'>My Info</NavLink></li>
-                <li><NavLink to='/myBank'>My Bank</NavLink></li>
-                <li onClick={logOutHandler}>Log Out</li>
+                <NavLink to='/reports'><li>Reports</li></NavLink>
+                <NavLink to='/transactions'><li>Transactions</li></NavLink>
+                <NavLink to='/myInfo'><li>My Info</li></NavLink>
+                <NavLink to='/myBank'><li>My Bank</li></NavLink>
+                <NavLink to='/'><li onClick={logOutHandler}>Log Out</li></NavLink>
             </ul>
         </div>
     )
