@@ -2,7 +2,6 @@ import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Route, Switch } from 'react-router-dom'
-import SidePanel from './Containers/SidePanel'
 import MainContainer from './Containers/MainContainer'
 import Login from './Containers/Login'
 
@@ -11,28 +10,45 @@ class App extends React.Component {
         currentUser: null
     }
 
+    componentDidMount = () => {
+        const token = localStorage.getItem("token")
+        const url = 'http://localhost:3000/profile/'
+        let options = {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` }
+        }
+        fetch(url, options)
+            .then(resp => resp.json())
+            .then(userData => { this.setState({ currentUser: userData.user }) })
+            .catch('Error logging in: ', console.log)
+    }
+
     signUpHandler = (userObj) => {
         const user = {...userObj}
         const url = 'http://localhost:3000/users/'
 
         const fetchPromise = this.logInToDb(url, "POST", user)
-        fetchPromise.then(userData => this.setState({ currentUser: userData.user }))
-        .catch('Error signing-up: ', console.log)
+        fetchPromise.then(userData => {
+            this.setState({ currentUser: userData.user })
+            localStorage.setItem('token', userData.jwt)
+        }).catch('Error logging in: ', console.log)
     }
 
     logInHandler = (userObj) => {
         const user = {...userObj}
         const url = 'http://localhost:3000/login'
         const fetchPromise = this.logInToDb(url, "POST", user)
-        fetchPromise.then(userData => this.setState({ currentUser: userData.user }))
-            .catch('Error logging in: ', console.log)
+        fetchPromise.then(userData => {
+            this.setState({ currentUser: userData.user })
+            localStorage.setItem('token', userData.jwt)
+        }).catch('Error logging in: ', console.log)
     }
 
     logInToDb = (url, method, obj) => {
         let options = {
             method: method,
             headers: {
-                "Authorization": `Bearer <token>`,
+                // "Authorization": `Bearer ${token}`,
                 "content-type": "application/json",
                 "accepts": "application/json"
             },
@@ -42,18 +58,18 @@ class App extends React.Component {
         return fetch(url, options)
         .then(resp=>resp.json())
     }
+
+    logOut = () => {
+        localStorage.clear()
+        this.setState({currentUser: null})
+    }
     
     render() {
         console.log('current user: ', this.state.currentUser)
         return (
-            <div>
+            <div >
                 {this.state.currentUser ?
-                    <div className="wrapper">
-                        <SidePanel />
-                        <Switch>
-                            <Route path="/" render={() => <MainContainer currentUser={this.state.currentUser}/>} />
-                        </Switch>
-                    </div>
+                    <Route path="/" render={() => <MainContainer currentUser={this.state.currentUser} logOutHandler={this.logOut}/>} />
                 :
                     <Login signUpHandler={this.signUpHandler} logInHandler={this.logInHandler}/>
                 }

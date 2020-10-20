@@ -4,7 +4,7 @@ import Reports from '../Containers/Reports'
 import Transactions from '../Containers/Transactions'
 import { UserInfo } from '../Containers/UserInfo'
 import BankMapContainer from '../Containers/BankMapContainer'
-import TestLogin from './Login'
+import SidePanel from './SidePanel'
 
 class MainContainer extends React.Component {
     state = {
@@ -18,20 +18,24 @@ class MainContainer extends React.Component {
     render () {
         const { id, username, first_name, last_name, address, account_balance, banks } = this.state
         const user = { id, username, first_name, last_name, address, account_balance, banks }
-        return <div className="main-container">
-            ***This is the Main Container for Rendering Components***
-            <Switch>
-                <Route path='/reports' render={() => <Reports/>} />
-                <Route path='/transactions' render={() => 
-                    <Transactions { ...this.state } 
-                        submitHandler={this.submitTransaction}
-                        deleteHandler={this.deleteTransaction}
-                        editHandler={this.editTransaction}
-                    />} />
-                <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
-                <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
-            </Switch>
-        </div> 
+        return (
+            <div className="wrapper">
+                <SidePanel accountBalance={this.state.account_balance} logOutHandler={this.props.logOutHandler}/>
+                <div className="main-view">
+                    <Switch>
+                        <Route path='/reports' render={() => <Reports/>} />
+                        <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
+                        <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
+                        <Route path={'/' || '/transactions'} render={() => 
+                            <Transactions { ...this.state } 
+                                submitHandler={this.submitTransaction}
+                                deleteHandler={this.deleteTransaction}
+                                editHandler={this.editTransaction}
+                            />} />
+                    </Switch>
+                </div> 
+            </div>
+        )
     }
 
     fetchUserData = (userId) => {

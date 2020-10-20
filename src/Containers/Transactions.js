@@ -14,7 +14,6 @@ class Transactions extends React.Component{
 
     render() {
         return <div className="trans-container">
-            <h3>Account Balance: ${this.props.account_balance}</h3>
             <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <hr/>
