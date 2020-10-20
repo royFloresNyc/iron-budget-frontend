@@ -66,10 +66,12 @@ class BudgetComparison extends React.Component {
                         {
                             label: 'Actual',
                             data: this.state.data,
+                            backgroundColor: '#FF0000'
                         },
                         {
                             label: 'Target',
-                            data: this.state.budget
+                            data: this.state.budget,
+                            backgroundColor: "#FF00FF"
                         }
                     ]
                 }}            

@@ -1,14 +1,56 @@
 import React from 'react'
 import {Doughnut} from 'react-chartjs-2';
+import FilterBox from './FilterBox'
 
 
 class Expenditure extends React.Component {
 
 //--State---------------------------------------------------
     state = {
-        data: [],
-        backgroundColor: [],
-        labels: []
+        period: "2020-01"
+    }
+//--Handlers----------------------------------------------------
+handleCheck = (value) => {
+    return this.setState({period: value})
+}
+//--Render------------------------------------------------------
+    renderDatePicker = () => {
+        return (
+            <FilterBox
+                f_value={this.state.period}
+                changeState={this.handleCheck}
+                transactions={this.props.periods.map(obj=>obj.date)}
+            />)
+    }
+    renderExpPie = () => {
+        return (
+        <Doughnut
+            data={{ 
+                labels: this.getLabels(),
+                datasets: [
+                    {
+                    label: 'Amount',
+                    backgroundColor: this.getColors(),
+                    hoverBackgroundColor: [
+                        '#f8f8f8'
+                    ],
+                    data: this.getValues()
+                    }
+                ]
+            }}
+          options={{
+            title:{
+              display:true,
+              text:'Expenditure',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
+        )
     }
 //--Helper-Functions-----------------------------------------
     getRandomColor = () => {
@@ -22,7 +64,8 @@ class Expenditure extends React.Component {
     getColors = () => {
         let newArr = []
         let i = 1
-        while (i <= this.props.info.length) {
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
+        while (i <= corrPeriod.length) {
             let new_color = this.getRandomColor()
             newArr.push(new_color)
             i += 1
@@ -30,57 +73,22 @@ class Expenditure extends React.Component {
         return newArr
     }
     getValues = () => {
-        let debits = this.props.info.filter(obj => obj.transaction_type_id === 2).map(obj=>obj.amount)
-        return debits
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
+        let credits = corrPeriod.filter(obj => obj.transaction_type_id === 2).map(obj=>obj.amount)
+        return credits
     }
     getLabels = () => {
-        let labels = this.props.info.filter(obj => obj.transaction_type_id === 2).map(obj=>obj.name)
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
+        let labels = corrPeriod.filter(obj => obj.transaction_type_id === 2).map(obj=>`${obj.name}, ${obj.t_date}`)
         return labels
     }
-//--Change-State------------------------------------------------
-    componentDidMount = () => {
-        let values = this.getValues()
-        let colors = this.getColors()
-        let labels = this.getLabels()
-        this.setState(()=>{
-            return {
-                data: values,
-                backgroundColor: colors,
-                labels: labels
-            }
-        })
-    }
+//--Main-Render------------------------------------------------
 
     render() {
-        console.log(this.state)
         return (
           <div>
-            <Doughnut
-                data={{ 
-                    labels: this.state.labels,
-                    datasets: [
-                        {
-                        label: 'Amount',
-                        backgroundColor: this.state.backgroundColor,
-                        hoverBackgroundColor: [
-                            '#f8f8f8'
-                        ],
-                        data: this.state.data
-                        }
-                    ]
-                }}
-              options={{
-                title:{
-                  display:true,
-                  text:'Expenditure',
-                  fontSize:20
-                },
-                legend:{
-                  display:true,
-                  position:'right'
-                }
-              }}
-            />
+           {this.renderDatePicker()}
+           {this.renderExpPie()}
           </div>
         );
       }
