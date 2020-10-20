@@ -109,7 +109,7 @@ div.map-btn {
     width: 30%;
 }
 
-.trans-form, div.user-form {
+.trans-form, div.user-form, div.log-in-form, div.sign-up-form {
     display: inline-block;
     border: 1px solid black;
     border-radius: 3px;
