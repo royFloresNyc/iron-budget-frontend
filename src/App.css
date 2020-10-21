@@ -165,35 +165,75 @@ div.trans-container{
 }
 
 div.transaction {
-    display: inline-block;
-    width: 80%;
+    margin: auto;
+    display: grid;
+    width: 75%;
     border-bottom: 1px solid black;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1fr;
 }
 
 div.transaction > div {
     display: inline-block;
-    height: 50px;
+    height: 30px;
 }
 
 div.date {
-    width: 30%;
+    grid-area: 2 / 1 / span 1 / span 1;
+    width: 100%;
     text-align: left;
 }
 
 div.name {
-    width: 40%;
+    grid-area: 2 / 2 / span 1 / span 2;
+    width: 100%;
+    text-align: left;
+}
+
+div.category-name {
+    grid-area: 2 / 4 / span 1 / span 1;
+    width: 100%;
     text-align: left;
 }
 
 div.amount {
-    width: 30%;
+    grid-area: 2 / 5 / span 1 / span 1;
+    width: 100%;
     text-align: right;
+}
+
+div.t-btn {
+    display: grid;
+    grid-area: 1 / 5 / span 1 / span 1;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: right;
+    margin-top: 3px;
+}
+
+div.edit-btn {
+    display: inline;
+    /* grid-area: 1 / 3 / span 1 / span 1; */
+    margin: auto;
+    width: 100%;
+    
+}
+
+div.delete-btn {
+    display: inline;
+    /* grid-area: 1 / 4 / span 1 / span 1; */
+    margin: auto;
+    width: 50%;
+}
+
+img.icon-btn {
+    width: 20px;
+    opacity: 0.5;
 }
 
 
 /* -------------------------buttons--------------------------------------------------- */
 
-div.trans-button, div.edit-info-btn , div.map-btn, div.sort{
+div.trans-button, div.edit-info-btn , div.map-btn {
     color: white;
     display: inline-block;
     background-color: rgb(61, 151, 247);
@@ -209,7 +249,7 @@ input[type=submit] {
     height: 25px;
     background-color: rgb(61, 151, 247);
     color: white;
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 4px;
 }
 
@@ -249,7 +289,7 @@ div#expBtnClicked {
 /* --------------------------Forms--------------------------------------------------------- */
 .trans-form, div.user-form {
     display: inline-block;
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     width: 80%;
     padding: 20px;
@@ -325,7 +365,7 @@ ul.reports-nav li:hover {
 /* --------------------------------------------Search / Sort bar---------------------------------- */
 div.search-bar {
     margin: auto;
-    width: 80%;
+    width: 75%;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -355,9 +395,10 @@ input.search:focus {
 div.sort {
     display: inline-block;
     background-color: rgb(27,30,33);
+    color: white;
     width: 50%;
     margin: 0px;
-    height: 20px;
+    height: 23px;
     padding-top: 5px;
     padding-bottom: 3px;
     border-radius: 0px;

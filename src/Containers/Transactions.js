@@ -71,6 +71,7 @@ class Transactions extends React.Component{
                 let groupedTransac = this.props.transactions.filter(trans => trans.category_id === cat.id)
                 newArrayOfTrans.push(groupedTransac)
             })
+            let dateToFormat = newArrayOfTrans.flat()[0].t_date
             return newArrayOfTrans.flat()
         }
     }
@@ -88,7 +89,8 @@ class Transactions extends React.Component{
     renderTransactions = (tList) => {
         return tList.map((trans, indx) => <Transaction key={indx} 
             transaction={trans} deleteHandler={this.props.deleteHandler}
-            editClickHandler={this.editClickHandler}/>)
+            editClickHandler={this.editClickHandler}
+            categories={this.props.credit_categories.concat(this.props.debit_categories)}/>)
     }
 
     transactionBtnHandler = (e) => {
