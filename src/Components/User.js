@@ -7,10 +7,14 @@ const User = ({ user }) => {
 
     return (
         <div className="user-info">
-            <h4>Username: {user.username}</h4>
-            <h4>Full Name: {`${user.first_name} ${user.last_name}`}</h4>
-            <h4>Address: {user.address}</h4>
-            <h4>Bank(s): { user.banks ?  renderBankNames(user.banks) : null }</h4> 
+            <p className="label">Username:</p>
+            <h4 className="user-detail">{user.username}</h4><br/>
+            <p className="label">Full Name:</p>
+            <h4 className="user-detail">{`${user.first_name} ${user.last_name}`}</h4><br/>
+            <p className="label">Address:</p>
+            <h4 className="user-detail">{user.address}</h4><br/>
+            <p className="label">Username:</p>
+            <h4 className="user-detail">{ user.banks ?  renderBankNames(user.banks) : null }</h4> 
         </div>
     )
 }
