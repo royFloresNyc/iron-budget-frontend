@@ -85,6 +85,7 @@ class BasicFinances extends React.Component {
     }
 
     render() {
+        console.log(' inside render in Basic Finances: ', this.props)
         return (
           <div>
             {this.renderDatePicker()}
