@@ -10,7 +10,7 @@ const Login = ({logInHandler, signUpHandler}) => {
     const clickHandler = () => {
         setSignUp(!signUp)
     }
-    console.log('current value of signUP: ', signUp)
+
     return (
         <div className="log-in-container">
             <div className="logo-log-in">

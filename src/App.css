@@ -193,7 +193,7 @@ div.amount {
 
 /* -------------------------buttons--------------------------------------------------- */
 
-div.trans-button, div.edit-info-btn , div.map-btn{
+div.trans-button, div.edit-info-btn , div.map-btn, div.sort{
     color: white;
     display: inline-block;
     background-color: rgb(61, 151, 247);
@@ -321,6 +321,8 @@ ul.reports-nav li:hover {
     border: 1px solid black;
     color: black;
 }
+
+/* ----------------------------------------------------------------------------------------------------- */
 
 
 
