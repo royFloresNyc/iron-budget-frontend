@@ -34,7 +34,7 @@ class UserForm extends React.Component {
         return (
             <div className="user-form" >
                 <form onSubmit={this.localSubmitHandler}>
-                    <input type="text" name="userName" 
+                    <input type="text" name="username" 
                         value={this.state.username ? this.state.username : ''} 
                         placeholder="Enter User Name" 
                         onChange={this.changeHandler}/>
@@ -50,7 +50,9 @@ class UserForm extends React.Component {
                         value={this.state.address ? this.state.address: ''} 
                         placeholder="Enter Address" 
                         onChange={this.changeHandler}/>
-                    <input type="submit"/>
+                    <div className="submit-btn">
+                        <input type="submit"/>
+                    </div>
                     <h3 onClick={this.props.hideForm}>x</h3>
                 </form>
             </div>

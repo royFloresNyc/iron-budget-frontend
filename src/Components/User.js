@@ -6,7 +6,7 @@ const User = ({ user }) => {
     }
 
     return (
-        <div>
+        <div className="user-info">
             <h4>Username: {user.username}</h4>
             <h4>Full Name: {`${user.first_name} ${user.last_name}`}</h4>
             <h4>Address: {user.address}</h4>

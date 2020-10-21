@@ -24,14 +24,14 @@ class Reports extends React.Component {
         console.log(this.state.userInfo)
         return(
             <div>
+                <Switch>
+                    <Route path='/reports/income' render={() => this.state.userInfo.transactions ? <Income info={this.state.userInfo.transactions}/> : <h1>"LOADING"</h1> } />
+                    <Route path='/reports/expenditure' render={() => this.state.userInfo.transactions ? <Expenditure info={this.state.userInfo.transactions}/> : <h1>"LOADING"</h1> } />
+                    <Route path='/reports/budget_comparison' render={() => this.state.userInfo.transactions ? <BudgetComparison info={this.state.userInfo}/> : <h1>"LOADING"</h1> }/>
+                    <Route path='/reports/projection' render={() => this.state.userInfo.transactions ? <Projection info={this.state.userInfo}/> : <h1>"LOADING"</h1> }/>
+                    <Route path={'/reports/' || '/reports/basic_finances'} render={() => this.state.userInfo.transactions ? <BasicFinances info={this.state.userInfo.transactions}/> : <h1>"LOADING"</h1> } />
+                </Switch>
             <ReportsNav/>
-            <Switch>
-                <Route path='/reports/basic_finances' render={() => this.state.userInfo.transactions ? <BasicFinances info={this.state.userInfo.transactions}/> : <h1>"LOADING"</h1> } />
-                <Route path='/reports/income' render={() => this.state.userInfo.transactions ? <Income info={this.state.userInfo.transactions}/> : <h1>"LOADING"</h1> } />
-                <Route path='/reports/expenditure' render={() => this.state.userInfo.transactions ? <Expenditure info={this.state.userInfo.transactions}/> : <h1>"LOADING"</h1> } />
-                <Route path='/reports/budget_comparison' render={() => this.state.userInfo.transactions ? <BudgetComparison info={this.state.userInfo}/> : <h1>"LOADING"</h1> }/>
-                <Route path='/reports/projection' render={() => this.state.userInfo.transactions ? <Projection info={this.state.userInfo}/> : <h1>"LOADING"</h1> }/>
-            </Switch>
             </div>
         )
     }

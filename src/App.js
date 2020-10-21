@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import MainContainer from './Containers/MainContainer'
 import Login from './Containers/Login'
 
@@ -11,16 +11,18 @@ class App extends React.Component {
     }
 
     componentDidMount = () => {
-        const token = localStorage.getItem("token")
-        const url = 'http://localhost:3000/profile/'
-        let options = {
-            method: "GET",
-            headers: { Authorization: `Bearer ${token}` }
+        if(localStorage.token){
+            const token = localStorage.getItem("token")
+            const url = 'http://localhost:3000/profile/'
+            let options = {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` }
+            }
+            fetch(url, options)
+                .then(resp => resp.json())
+                .then(userData => { this.setState({ currentUser: userData.user }) })
+                .catch('Error logging in: ', console.log)
         }
-        fetch(url, options)
-            .then(resp => resp.json())
-            .then(userData => { this.setState({ currentUser: userData.user }) })
-            .catch('Error logging in: ', console.log)
     }
 
     signUpHandler = (userObj) => {
@@ -65,7 +67,6 @@ class App extends React.Component {
     }
     
     render() {
-        console.log('current user: ', this.state.currentUser)
         return (
             <div >
                 {this.state.currentUser ?

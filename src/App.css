@@ -1,4 +1,4 @@
-
+/* ----------------------------Containers / Wrappers ---------------------------------- */
 
 body {
     background-image: linear-gradient(#161a1d, darkgray, #161a1d);
@@ -19,14 +19,77 @@ body {
     border-right: 2px solid black;
     border-bottom: 2px solid black;
     text-align: center;
-    box-shadow: inset 0px 0px 150px 15px rgba(0,0,0,0.8);
+    box-shadow: inset 0px 0px 75px 15px rgba(0,0,0,0.5);
     padding-top: 50px;
+}
+
+div.map, div.user-info {
+    padding-top: 50px;
+}
+/* ---------------------------LogIn Page --------------------------------------- */
+
+div.log-in-container {
+    height: 100vh;
+    width: 100vw;
+    background-image: url("./Images/HorizontalIronSheet.png");
+    box-shadow: inset 0px 0px 150px 50px rgba(0,0,0,0.8);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+div.logo-log-in > img {
+    display: block;
+    margin: auto;
+    padding-top: 5vh;
+    max-height: 60vh;
+}
+
+div.login-signup-wrapper {
+    margin-top: 5vh;
+}
+
+div.log-in-form, div.sign-up-form {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 40%;
+    height: 10vh;
+    margin: auto;
+    padding-top: 40px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    text-align: center;
+}
+
+.log-in-form > h4,p {
+    color: white;
+    display: inline-block
+}
+
+.log-in-form > p {
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+.log-in-form > h4 {
+    margin-top: 0px;
+    padding-left: 3px;
+    cursor: pointer;
+}
+
+.log-in-form > h4:hover {
+    color:  rgb(61, 151, 247);
+    font-size: 20px;
+}
+
+div.sign-up-form > h3 {
+    color: white;
+    cursor: pointer;
+    text-align: right;
+    padding-right: 5px;
 }
 
 /* ---------------------------Side Panel --------------------------------------- */
 .side-panel {
     background-image: url("./Images/IronSheet.png");
-    /* background: lightgray; */
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -36,16 +99,14 @@ body {
     border-right: 1px solid black;
 }
 
-div.logo {
+div.logo-side-panel {
     max-width: 100%;
     margin-top: 5vh;
     margin-bottom: 5vh;
-    /* height: 270px; */
-    /* background-color: black; */
     padding-left: 8px;
 }
 
-div.logo > img {
+div.logo-side-panel > img {
     max-width: 100%;
 }
 
@@ -90,49 +151,17 @@ ul.nav li {
 }
 
 ul.nav li:hover {
-    background-color: white;
+    background-color: rgb(61, 151, 247);
     transition: 0.5s;
-    border: 1px solid black;
+    border: 3px solid white;
     color: black;
 }
 
-/* a {
-    text-decoration: none;
-    color: white;
-}
 
- */
-
-a:active {
-    color: rbg(61, 151, 247);
-}
-
-/* ---------------------------------------------------------------------------------- */
+/* ----------------------------Transactions------------------------------------------- */
 div.trans-container{
     max-height: 80vh;
     overflow: scroll;
-}
-
-div.trans-button, div.edit-info-btn , div.map-btn{
-    display: inline-block;
-    background-color: lightgray;
-    width: 300px;
-    height: 30px;
-    margin: 5px;
-    border: 1px solid black;
-    border-radius: 3px;
-}
-
-div.map-btn {
-    width: 30%;
-}
-
-.trans-form, div.user-form, div.log-in-form, div.sign-up-form {
-    display: inline-block;
-    border: 1px solid black;
-    border-radius: 3px;
-    width: 80%;
-    padding: 20px;
 }
 
 div.transaction {
@@ -161,11 +190,137 @@ div.amount {
     text-align: right;
 }
 
+
+/* -------------------------buttons--------------------------------------------------- */
+
+div.trans-button, div.edit-info-btn , div.map-btn{
+    color: white;
+    display: inline-block;
+    background-color: rgb(61, 151, 247);
+    width: 300px;
+    height: 25px;
+    padding-top: 8px;
+    margin: 5px;
+    border: 1px solid black;
+    /* border-radius: 10px; */
+}
+
+input[type=submit] {
+    height: 25px;
+    background-color: rgb(61, 151, 247);
+    color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+div.map-btn {
+    width: 30%;
+}
+
+div.submit-btn {
+    margin-top: 20px;
+}
+
+div.submit-btn > input[type=submit] {
+    width: 300px;
+    height: 35px;
+}
+
+div#incmBtnClicked {
+    background-color:#14cc60;
+    height: 40px;
+    padding-top: 0px;
+    border: 3px solid lightgray;
+    border-radius: 10px;
+}
+
+div#expBtnClicked {
+    background-color: #d83b00;
+    height: 40px;
+    padding-top: 0px;
+    border: 3px solid lightgray;
+    border-radius: 10px;
+}
+
+#incmBtnClicked > h2, #expBtnClicked > h2 {
+    margin-top: 5px;
+}
+
+/* --------------------------Forms--------------------------------------------------------- */
+.trans-form, div.user-form {
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 80%;
+    padding: 20px;
+    padding-top: 50px;
+    background-color: white;
+}
+
+input[type=text], input[type=password], input[type=number], input[type=date] {
+    /* border: 2px solid rgb(61, 151, 247); */
+    height: 20px;
+    margin-right: 2px;
+    margin-left: 2px;
+    border-radius: 2px;
+}
+
+.select {
+    height: 25px;
+    border: 2px solid black;
+}
+
+input[type=number] {
+    width: 60px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input.transac-name {
+    width: 200px;
+}
+
 form > h3 {
     text-align: right;
     margin-bottom: 0px;
+    cursor: pointer;
 }
 
+/* ------------------------------------------------ Reports Nav Buttons-------------------------------- */
+
+div.reports-nav-bar {
+    min-height: 20vh;
+    margin-top: 10vh;
+}
+ul.reports-nav {
+    height: 40px;
+    margin-left: -20px;
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+}
+
+ul.reports-nav li {
+    height: 30px;
+    padding-top: 10px;
+    width: 200px;
+    display: inline-block;
+    margin: 3px;
+    background-color: rgb(27,30,33);
+    color: white;
+    text-align: center;
+    border-radius: 3px;
+}
+
+ul.reports-nav li:hover {
+    background-color: rgb(61, 151, 247);
+    transition: 0.5s;
+    border: 1px solid black;
+    color: black;
+}
 
 
 

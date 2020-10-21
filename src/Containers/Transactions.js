@@ -39,6 +39,7 @@ class Transactions extends React.Component{
     }
 
     transactionBtnHandler = (e) => {
+        console.log('button Id: ', e.target)
         const buttonId = e.target.id
         this.setState(() => {
             if(buttonId === "expBtnClicked"){
