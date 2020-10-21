@@ -9,10 +9,10 @@ const SearchOrSortForm = ( { searchVal, searchHandler, sortHandler}) => {
     // }
 
     return (
-        <div>
-            <input type="text" value={searchVal} onChange={(e) => searchHandler(e.target.value)}/>
+        <div className="search-bar">
+            <input className="search" type="text" placeholder="Search..." value={searchVal} onChange={(e) => searchHandler(e.target.value)}/>
             <div className="sort" onClick={sortHandler}>
-                Sort
+                Sort By Category
             </div>
         </div>
     )

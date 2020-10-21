@@ -322,7 +322,47 @@ ul.reports-nav li:hover {
     color: black;
 }
 
-/* ----------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------Search / Sort bar---------------------------------- */
+div.search-bar {
+    margin: auto;
+    width: 80%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 25px;
+}
 
+input.search {
+    border: 1px solid black;
+    width: 50%;
+    margin: 0px;
+    height: 26px;
+    border-radius: 0px;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    background-image: url('https://images.vexels.com/media/users/3/132068/isolated/preview/f9bb81e576c1a361c61a8c08945b2c48-search-icon-by-vexels.png');
+    background-position: 6px 2px;
+    background-repeat: no-repeat;
+    background-size: 8%;
+    padding-left: 40px;
+}
+
+input.search:focus {
+    outline: none;
+}
+
+div.sort {
+    display: inline-block;
+    background-color: rgb(27,30,33);
+    width: 50%;
+    margin: 0px;
+    height: 20px;
+    padding-top: 5px;
+    padding-bottom: 3px;
+    border-radius: 0px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
 
 
