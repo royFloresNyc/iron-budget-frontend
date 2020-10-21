@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import { Route, Switch } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import MainContainer from './Containers/MainContainer'
 import Login from './Containers/Login'
 

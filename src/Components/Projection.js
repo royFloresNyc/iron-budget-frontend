@@ -1,5 +1,5 @@
 import React from 'react'
-import {Doughnut, Line} from 'react-chartjs-2'
+import {Line} from 'react-chartjs-2'
 import FilterBox from './FilterBox'
 
 class Projection extends React.Component {
@@ -15,17 +15,17 @@ class Projection extends React.Component {
     }
     //--Helper-Functions-----------------------------------------
         getValues = () => {
-            let credits = [...this.props.info.transactions.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.amount)]
+            let credits = [...this.props.periods.map(obj=>obj.values).map(ele=>ele.filter(x=>x.category.name===this.state.transact_name).map(vari=>vari.total)).map(last_obj=>last_obj[0])]
             return credits
         }
         getProjection = () => {
             if(this.props.info.projected.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.values)[0] === undefined)
             {return null}
-            else{let projection = [...this.props.info.transactions.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.amount), ...this.props.info.projected.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.values)[0]]
+            else{let projection = [...this.props.periods.map(obj=>obj.values).map(ele=>ele.filter(x=>x.category.name===this.state.transact_name).map(vari=>vari.total)).map(last_obj=>last_obj[0]), ...this.props.info.projected.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.values)[0]]
             return projection}
         }
         getLabels = () => {
-            let labels = [...this.props.info.transactions.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.t_date), "P1", "P2", "P3", "P4", "P5"]
+            let labels = [...this.props.periods.map(obj=>obj.date), "P1", "P2", "P3", "P4", "P5"]
             return labels
         }
         onlyUnique = (value, index, self) => {
@@ -37,7 +37,7 @@ class Projection extends React.Component {
                 <FilterBox
                     f_value={this.state.transact_name}
                     changeState={this.handleCheck}
-                    transactions={this.props.info.transactions.map(obj=> obj.name)}
+                    transactions={this.props.periods.map(obj=>obj.values).flat().filter(f=>f.category.transaction_type_id === 2).map(ele=>ele.category.name)}
                 />)
             }
         renderProjection = () => {
@@ -83,21 +83,7 @@ class Projection extends React.Component {
         />}
         }
 
-    //--Change-State------------------------------------------------
-        // componentDidMount = () => {
-        //     let values = this.getValues()
-        //     let projection = this.getProjection()
-        //     let labels = this.getLabels()
-        //     this.setState(()=>{
-        //         return {
-        //             data: values,
-        //             projection: projection,
-        //             labels: labels
-        //         }
-        //     })
-        // }   
         render() {
-            console.log(this.props.info.projected.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.values)[0])
             return (
                 <div>
                   {this.renderFilter()}

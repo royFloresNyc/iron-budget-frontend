@@ -34,10 +34,10 @@ class BasicFinances extends React.Component {
     }
     getValues = () => {
         let newValues = []
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
-        let credits = corrPeriod.filter(obj => obj.transaction_type_id === 1).reduce((sum, obj)=> sum + obj.amount, 0)
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
+        let credits = corrPeriod.filter(ele=>ele.category.transaction_type_id===1).reduce((sum, obj)=> sum + obj.total, 0)
         newValues.push(credits)
-        let debits = corrPeriod.filter(obj => obj.transaction_type_id === 2).reduce((sum, obj)=> sum + obj.amount, 0)
+        let debits = corrPeriod.filter(ele=>ele.category.transaction_type_id===2).reduce((sum, obj)=> sum + obj.total, 0)
         newValues.push(debits)
         return newValues
     }
@@ -85,7 +85,6 @@ class BasicFinances extends React.Component {
     }
 
     render() {
-        console.log(this.state.period)
         return (
           <div>
             {this.renderDatePicker()}

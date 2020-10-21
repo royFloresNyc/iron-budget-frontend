@@ -64,7 +64,7 @@ class Income extends React.Component {
     getColors = () => {
         let newArr = []
         let i = 1
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
         while (i <= corrPeriod.length) {
             let new_color = this.getRandomColor()
             newArr.push(new_color)
@@ -73,20 +73,17 @@ class Income extends React.Component {
         return newArr
     }
     getValues = () => {
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
-        let credits = corrPeriod.filter(obj => obj.transaction_type_id === 1).map(obj=>obj.amount)
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
+        let credits = corrPeriod.filter(ele=>ele.category.transaction_type_id===1).map(ele=>ele.total)
         return credits
     }
     getLabels = () => {
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
-        let labels = corrPeriod.filter(obj => obj.transaction_type_id === 1).map(obj=>`${obj.name}, ${obj.t_date}`)
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
+        let labels = corrPeriod.filter(ele=>ele.category.transaction_type_id===1).map(ele=>ele.category.name)
         return labels
     }
 //--Main-Render-------------------------------------------
     render() {
-        console.log(this.getLabels())
-        console.log(this.getValues())
-        console.log(this.getColors())
         return (
           <div>
               {this.renderDatePicker()}

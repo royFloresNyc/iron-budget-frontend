@@ -64,7 +64,7 @@ handleCheck = (value) => {
     getColors = () => {
         let newArr = []
         let i = 1
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
         while (i <= corrPeriod.length) {
             let new_color = this.getRandomColor()
             newArr.push(new_color)
@@ -73,13 +73,13 @@ handleCheck = (value) => {
         return newArr
     }
     getValues = () => {
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
-        let credits = corrPeriod.filter(obj => obj.transaction_type_id === 2).map(obj=>obj.amount)
-        return credits
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
+        let debits = corrPeriod.filter(ele=>ele.category.transaction_type_id===2).map(ele=>ele.total)
+        return debits
     }
     getLabels = () => {
-        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period).map(obj=>obj.value)[0]
-        let labels = corrPeriod.filter(obj => obj.transaction_type_id === 2).map(obj=>`${obj.name}, ${obj.t_date}`)
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
+        let labels = corrPeriod.filter(ele=>ele.category.transaction_type_id===2).map(ele=>ele.category.name)
         return labels
     }
 //--Main-Render------------------------------------------------

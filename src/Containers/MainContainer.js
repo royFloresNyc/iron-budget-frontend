@@ -8,37 +8,6 @@ import SidePanel from './SidePanel'
 
 class MainContainer extends React.Component {
     state = {
-<<<<<<< HEAD
-        transactions: [],
-        transaction_types: [],
-        expense_categories: [],
-        debit_categories: [],
-        credit_categories: [],
-        income_categories: [],
-        token: [],
-    }
-
-    componentDidMount = () =>{
-        this.fetchUserData(1)
-        // this.fetchLinkToken(1)
-    }
-
-    render () {
-        console.log("main", this.state.token)
-        return <div className="main-container">
-            ***This is the Main Container for Rendering Components***
-            <Switch>
-                <Route path='/reports' render={() => <Reports/>} />
-                <Route path='/transactions' render={() => 
-                    <Transactions { ...this.state } 
-                        submitHandler={this.submitTransaction}
-                        deleteHandler={this.deleteTransaction}
-                        editHandler={this.editTransaction}
-                    />} />
-                <Route path='/testLogin' render = {() => <TestLogin token={this.state.token}/>}/>
-            </Switch>
-        </div> 
-=======
         transactions: []
     }
 
@@ -54,7 +23,7 @@ class MainContainer extends React.Component {
                 <SidePanel accountBalance={this.state.account_balance} logOutHandler={this.props.logOutHandler}/>
                 <div className="main-view">
                     <Switch>
-                        <Route path='/reports' render={() => <Reports/>} />
+                        <Route path='/reports' render={() => <Reports user={this.state}/>} />
                         <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
                         <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
                         <Route path={'/' || '/transactions'} render={() => 
@@ -67,7 +36,6 @@ class MainContainer extends React.Component {
                 </div> 
             </div>
         )
->>>>>>> main
     }
     // fetchLinkToken = (userId) => {
 
@@ -97,26 +65,6 @@ class MainContainer extends React.Component {
     }
 
     submitTransaction = (tObject) => {
-<<<<<<< HEAD
-        this.setState({ transactions: [tObject, ...this.state.transactions]}) 
-        let newObj = [...tObject, {user_id: 1}]
-        let options = {
-            method: "POST",
-            header: {
-                'content-type': 'application/json',
-                "accept": 'application/json',
-            },
-            body: JSON.stringify(newObj)
-        }
-        // fetch(`http://localhost:3000/transactions`, options)
-
-    }
-
-    deleteTransaction = (transactionId) => {
-        // const url = 'http://localhost:3000/transactions/' + transactionId
-        // const fetchPromise = this.connectToDb(url, "DELETE")
-        // fetchPromise.then(data => console.log('Deleted this object: ', data))
-=======
         const url = 'http://localhost:3000/transactions'
         const fetchPromise = this.connectToDb(url, "POST", tObject)
         fetchPromise.then(data => {
@@ -136,18 +84,11 @@ class MainContainer extends React.Component {
             const newBalance = this.getTotal(newArray)
             this.setState({ transactions: newArray , account_balance: newBalance}) 
         })
->>>>>>> main
 
         
     }
 
     editTransaction = (tObject) => {
-<<<<<<< HEAD
-        
-        // const url = 'http://localhost:3000/transactions/' + tObject.id
-        // const fetchPromise = this.connectToDb(url, "PATCH", tObject)
-        // fetchPromise.then(data => console.log('Added this object to db: ', data))
-=======
         const url = 'http://localhost:3000/transactions/' + tObject.id
         const fetchPromise = this.connectToDb(url, "PATCH", tObject)
         fetchPromise.then(data => {
@@ -169,7 +110,6 @@ class MainContainer extends React.Component {
 
     submitUserInfo = (userObj) => {
         console.log('submit this user object!!!!: ', userObj)
->>>>>>> main
 
         const url = `http://localhost:3000/users/${userObj.id}`
         const fetchPromise = this.connectToDb(url, "PATCH", userObj)
