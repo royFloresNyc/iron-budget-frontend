@@ -201,6 +201,7 @@ div.amount {
     grid-area: 2 / 5 / span 1 / span 1;
     width: 100%;
     text-align: right;
+    font-weight: bold;
 }
 
 div.t-btn {
