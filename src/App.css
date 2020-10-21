@@ -365,6 +365,7 @@ ul.reports-nav li:hover {
 /* --------------------------------------------Search / Sort bar---------------------------------- */
 div.search-bar {
     margin: auto;
+    margin-top: 40px;
     width: 75%;
     height: 30px;
     display: flex;

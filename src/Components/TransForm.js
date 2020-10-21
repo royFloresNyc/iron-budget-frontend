@@ -9,7 +9,6 @@ class TransForm extends React.Component {
     }
 
     render() {
-        console.log('categories: ', this.props.categories)
         return <form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
             <input type="date" 
                 name="t_date" 

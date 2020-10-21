@@ -19,7 +19,6 @@ class Transactions extends React.Component{
         return <div className="trans-container">
             <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
-            <hr/>
             { this.state.showForm ? 
                 <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
                     categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
