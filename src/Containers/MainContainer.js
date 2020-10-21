@@ -23,7 +23,7 @@ class MainContainer extends React.Component {
                 <SidePanel accountBalance={this.state.account_balance} logOutHandler={this.props.logOutHandler}/>
                 <div className="main-view">
                     <Switch>
-                        <Route path='/reports' render={() => <Reports/>} />
+                        <Route path='/reports' render={() => <Reports user={this.state}/>} />
                         <Route path='/myInfo' render={() => <UserInfo user={user} submitHandler={this.submitUserInfo}/>} />
                         <Route path='/myBank' render={() => <BankMapContainer geoLocation={this.state.geo_location} banks={this.state.banks}/> } />
                         <Route path={'/' || '/transactions'} render={() => 
@@ -37,7 +37,25 @@ class MainContainer extends React.Component {
             </div>
         )
     }
+    // fetchLinkToken = (userId) => {
 
+    //     let userdata = {user_id: 1, public_token: 0}
+
+    //     let options = {
+    //         method: "POST",
+    //         header: {
+    //             "content-type": 'application/json',
+    //             "accept": 'application/json',
+    //         },
+    //         body: JSON.stringify({plaid_token: {...userdata}})
+    //     }
+    //     fetch(`http://localhost:3000/get_link_token`, options)
+    //     .then(resp => resp.json())
+    //     .then(userData => {
+    //         this.setState({token: userData})
+    //     })
+    //     .catch(console.log)
+    // } 
     fetchUserData = (userId) => {
         const url = `http://localhost:3000/users/${userId}`
         const fetchPromise = this.connectToDb(url)

@@ -1,105 +1,97 @@
 import React from 'react'
-import {Doughnut, Line} from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2'
+import FilterBox from './FilterBox'
 
-class Income extends React.Component {
+class Projection extends React.Component {
 
     //--State---------------------------------------------------
         state = {
-            data: [],
-            backgroundColor: [],
-            labels: []
+            transact_name: "Bills",
+            checked: false 
         }
+    //--Handlers----------------------------------------------------
+    handleCheck = (name) => {
+        return this.setState({transact_name: name})
+    }
     //--Helper-Functions-----------------------------------------
-        getRandomColor = () => {
-            let letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-        getColors = () => {
-            let newArr = []
-            let i = 1
-            while (i <= this.props.info.length) {
-                let new_color = this.getRandomColor()
-                newArr.push(new_color)
-                i += 1
-            }
-            return newArr
-        }
         getValues = () => {
-            let credits = [...this.props.info.transactions.filter(obj=>obj.name==="Car Payment").map(obj=>obj.amount)]
+            let credits = [...this.props.periods.map(obj=>obj.values).map(ele=>ele.filter(x=>x.category.name===this.state.transact_name).map(vari=>vari.total)).map(last_obj=>last_obj[0])]
             return credits
         }
         getProjection = () => {
-            let projection = [...this.props.info.transactions.filter(obj=>obj.name==="Car Payment").map(obj=>obj.amount), ...this.props.info.projected[0]["Car Payment"]]
-            return projection
+            if(this.props.info.projected.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.values)[0] === undefined)
+            {return null}
+            else{let projection = [...this.props.periods.map(obj=>obj.values).map(ele=>ele.filter(x=>x.category.name===this.state.transact_name).map(vari=>vari.total)).map(last_obj=>last_obj[0]), ...this.props.info.projected.filter(obj=>obj.name===this.state.transact_name).map(obj=>obj.values)[0]]
+            return projection}
         }
         getLabels = () => {
-            let labels = [...this.props.info.transactions.filter(obj=>obj.name==="Car Payment").map(obj=>obj.t_date), "M1", "M2", "M3", "M4", "M5"]
+            let labels = [...this.props.periods.map(obj=>obj.date), "P1", "P2", "P3", "P4", "P5"]
             return labels
         }
-    //--Change-State------------------------------------------------
-        componentDidMount = () => {
-            let values = this.getValues()
-            let projection = this.getProjection()
-            let labels = this.getLabels()
-            this.setState(()=>{
-                return {
-                    data: values,
-                    projection: projection,
-                    labels: labels
-                }
-            })
+        onlyUnique = (value, index, self) => {
+            return self.indexOf(value) === index;
+          }
+    //--Renders-----------------------------------------------------
+        renderFilter = () => {
+            return (
+                <FilterBox
+                    f_value={this.state.transact_name}
+                    changeState={this.handleCheck}
+                    transactions={this.props.periods.map(obj=>obj.values).flat().filter(f=>f.category.transaction_type_id === 2).map(ele=>ele.category.name)}
+                />)
+            }
+        renderProjection = () => {
+           if(this.getProjection() === null){
+           return <h3>Not Enough Data for <strong>{this.state.transact_name}</strong></h3>
+           }
+           else{
+           return <Line
+            data={{ 
+                labels: this.getLabels(),
+                datasets: [{
+                    label: "Expenditure",
+                    backgroundColor: '#0BB2EB', 
+                    data: this.getValues(),
+                    fill: false,
+                },
+                {
+                    label: "Projected",
+                    backgroundColor: '#6D3535', 
+                    data: this.getProjection(),
+                    fill: false
+                }    
+            ]
+            }}
+            options={{
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        suggestedMin: 0,
+                    }
+                }]
+            },
+            title:{
+                display:true,
+                text:'Expenditure Projection',
+                fontSize:20
+            },
+            legend:{
+                display:true,
+                position:'right'
+            }
+            }}
+        />}
         }
-    
+
         render() {
-            console.log(this.props.info.projected[0]["Car Payment"])
             return (
                 <div>
-                <Line
-                    data={{ 
-                        labels: this.state.labels,
-                        datasets: [{
-                            label: "Expenditure",
-                            backgroundColor: '#0BB2EB', 
-                            data: this.state.data,
-                            fill: false,
-                        },
-                        {
-                            label: "Projected",
-                            backgroundColor: '#6D3535', 
-                            data: this.state.projection,
-                            fill: false
-                        }    
-                    ]
-                    }}
-                    options={{
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                suggestedMin: 0,
-                                suggestedMax: 1500,
-                                stepSize: 100
-                            }
-                        }]
-                    },
-                    title:{
-                        display:true,
-                        text:'Expenditure Projection',
-                        fontSize:20
-                    },
-                    legend:{
-                        display:true,
-                        position:'right'
-                    }
-                    }}
-                />
+                  {this.renderFilter()}
+                  {this.renderProjection()}
                 </div>
             );
         }
 }
         
     
-    export default Income
+    export default Projection

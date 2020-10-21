@@ -1,12 +1,17 @@
 import React from 'react'
 import {Doughnut} from 'react-chartjs-2';
+import FilterBox from './FilterBox'
 
 
 class BasicFinances extends React.Component {
 
 //--State---------------------------------------------------
     state = {
-        data: []
+        period: "2020-01"
+    }
+//--Handlers----------------------------------------------------
+    handleCheck = (value) => {
+        return this.setState({period: value})
     }
 //--Helper-Functions-----------------------------------------
     getRandomColor = () => {
@@ -29,55 +34,61 @@ class BasicFinances extends React.Component {
     }
     getValues = () => {
         let newValues = []
-        let credits = this.props.info.filter(obj => obj.transaction_type_id === 1).reduce((sum, obj)=> sum + obj.amount, 0)
+        let corrPeriod = this.props.periods.filter(obj=> obj.date===this.state.period)[0].values
+        let credits = corrPeriod.filter(ele=>ele.category.transaction_type_id===1).reduce((sum, obj)=> sum + obj.total, 0)
         newValues.push(credits)
-        let debits = this.props.info.filter(obj => obj.transaction_type_id === 2).reduce((sum, obj)=> sum + obj.amount, 0)
+        let debits = corrPeriod.filter(ele=>ele.category.transaction_type_id===2).reduce((sum, obj)=> sum + obj.total, 0)
         newValues.push(debits)
         return newValues
     }
-//--Change-State------------------------------------------------
-    componentDidMount = () => {
-        let values = this.getValues()
-        this.setState(()=>{
-            return {
-                data: values
+//--Render------------------------------------------------------
+    renderDatePicker = () => {
+        return (
+            <FilterBox
+                f_value={this.state.period}
+                changeState={this.handleCheck}
+                transactions={this.props.periods.map(obj=>obj.date)}
+            />)
+    }
+    renderPie = () => {
+        return (
+            <Doughnut
+            data={ 
+                { 
+                labels: ["Income", "Expenditure"],
+                datasets: [
+                    {
+                    label: 'Amount',
+                    backgroundColor: ['#2E8B57', '#FF0000'],
+                    hoverBackgroundColor: [
+                        '#00FF7F',
+                        '#FF4500'
+                    ],
+                    data: this.getValues()
+                    }
+                ]
             }
-        })
+            }
+          options={{
+            title:{
+              display:true,
+              text:'Income Vs Expenditure',
+              fontSize:20
+            },
+            legend:{
+              display:true,
+              position:'right'
+            }
+          }}
+        />
+        )
     }
 
     render() {
-        console.log(this.state)
         return (
           <div>
-            <Doughnut
-                data={ 
-                    { 
-                    labels: ["Income", "Expenditure"],
-                    datasets: [
-                        {
-                        label: 'Amount',
-                        backgroundColor: ['#2E8B57', '#FF0000'],
-                        hoverBackgroundColor: [
-                            '#00FF7F',
-                            '#FF4500'
-                        ],
-                        data: this.state.data
-                        }
-                    ]
-                }
-                }
-              options={{
-                title:{
-                  display:true,
-                  text:'Income Vs Expenditure',
-                  fontSize:20
-                },
-                legend:{
-                  display:true,
-                  position:'right'
-                }
-              }}
-            />
+            {this.renderDatePicker()}
+            {this.renderPie()}
           </div>
         );
       }
