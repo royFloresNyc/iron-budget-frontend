@@ -344,7 +344,7 @@ form > h3 {
 
 div.reports-nav-bar {
     min-height: 20vh;
-    margin-top: 10vh;
+    /* margin-top: 10vh; */
 }
 ul.reports-nav {
     height: 40px;

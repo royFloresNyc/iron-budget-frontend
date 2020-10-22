@@ -36,12 +36,13 @@ class Reports extends React.Component {
                 </Switch> */}
             <ReportsNav/>
             <Switch>
-                <Route path='/reports/basic_finances' render={() => this.props.user.transactions ? <BasicFinances info={this.props.user.transactions} periods={this.props.user.transacts_by_period}/> :  <h1>"LOADING"</h1> }/>
                 <Route path='/reports/income' render={() => this.props.user.transactions ? <Income info={this.props.user.transactions} periods={this.props.user.transacts_by_period}/> : <h1>"LOADING"</h1> }/>
                 <Route path='/reports/expenditure' render={() => this.props.user.transactions ? <Expenditure info={this.props.user.transactions} periods={this.props.user.transacts_by_period}/> : <h1>"LOADING"</h1> }/>
                 <Route path='/reports/budget_comparison' render={() => this.props.user.transactions ? <BudgetComparison info={this.props.user} periods={this.props.user.transacts_by_period}/> :<h1>"LOADING"</h1> }/>
                 <Route path='/reports/projection' render={() => this.props.user.transactions ? <Projection info={this.props.user} periods={this.props.user.transacts_by_period}/> : <h1>"LOADING"</h1> }/>
+                <Route path={'/reports/' || '/reports/basic_finances'} render={() => this.props.user.transactions ? <BasicFinances info={this.props.user.transactions} periods={this.props.user.transacts_by_period}/> :  <h1>"LOADING"</h1> }/>
             </Switch>
+            
             </div>
         )
     }
