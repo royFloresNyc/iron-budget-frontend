@@ -69,6 +69,7 @@ class MainContainer extends React.Component {
         const url = 'http://localhost:3000/transactions'
         const fetchPromise = this.connectToDb(url, "POST", tObject)
         fetchPromise.then(data => {
+            console.log('data from db: ', data)
             const newArray = [data, ...this.state.transactions]
             const newBalance = this.getTotal(newArray)
             this.setState({ transactions:  newArray, account_balance: newBalance}) 
@@ -114,13 +115,17 @@ class MainContainer extends React.Component {
 
         const url = `http://localhost:3000/users/${userObj.id}`
         const fetchPromise = this.connectToDb(url, "PATCH", userObj)
-        fetchPromise.then(dbObj => this.setState(dbObj))
+        fetchPromise.then(dbObj => {
+            this.setState(dbObj)
+        })
     }
 
     connectToDb = (url, fetchMethod, object) => {
+        const token = localStorage.getItem("token")
         const options = {
             method: fetchMethod,
             headers: {
+                Authorization: `Bearer ${token}`,
                 'content-type': 'application/json',
                 accepts: 'application/json',
             },

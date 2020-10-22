@@ -4,7 +4,7 @@ import logo from '../Images/IronBudgetLogo.png'
 
 const SidePanel = ({accountBalance, logOutHandler}) => {
     return <div className="side-panel">
-            <div className="logo">
+            <div className="logo-side-panel">
                 <img src={logo} alt='Iron Budget Logo'/>
             </div>
             <div className="account-balance">

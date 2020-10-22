@@ -5,6 +5,7 @@ import Transaction from '../Components/Transaction'
 import ReactModal from 'react-modal'
 import CategoryForm from '../Components/CategoryForm'
 
+import { SearchOrSortForm } from '../Components/SearchOrSortForm'
 
 
 class Transactions extends React.Component{
@@ -12,7 +13,9 @@ class Transactions extends React.Component{
         expBtnClicked: false,
         incmBtnClicked: false,
         showForm: false,
-        transactionToEdit: undefined
+        transactionToEdit: undefined,
+        searchVal: '',
+        sort: false
     }
 
     render() {
@@ -35,10 +38,12 @@ class Transactions extends React.Component{
                     editHandler={this.props.editHandler}
                     hideForm={this.hideForm}
                     transactionToEdit={this.state.transactionToEdit}
-                    userId={this.props.id}
-                /> : null}
+                    userId={this.props.id} /> 
+                : 
+                <SearchOrSortForm searchVal={this.state.searchVal} searchHandler={this.searchHandler} sortHandler={this.sortHandler}/>
+            }
             <div className="transactions">
-                {this.renderTransactions(this.props.transactions)}
+                {this.renderTransactions(this.getTransactions())}
             </div>
         </div>
     }
@@ -54,14 +59,64 @@ class Transactions extends React.Component{
     renderCategoryForm = () => {
         return <CategoryForm />
     }
+    getTransactions = () => {
+        let tList = this.props.transactions
+        if(this.state.sort) {
+            tList = this.groupTransByCategory()
+        }
+        return tList.filter( transac => transac.name.toLowerCase().includes(this.state.searchVal.toLowerCase()))
+    }
+
+    getSortedCategoriesByName = () => {
+        if(this.props.debit_categories) { 
+            let categories = (this.props.debit_categories).concat(this.props.credit_categories) //combine all categories into one flat array
+            return categories.sort((catA, catB) => {
+                let nameA = catA.name.toUpperCase()
+                let nameB = catB.name.toUpperCase()
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                // names must be equal
+                return 0;
+            });
+        }
+    }
+
+    groupTransByCategory = () => {
+        if(this.props.debit_categories) {
+            const sortedCategories = this.getSortedCategoriesByName()
+            let newArrayOfTrans = []
+            sortedCategories.forEach(cat => {
+                let groupedTransac = this.props.transactions.filter(trans => trans.category_id === cat.id)
+                newArrayOfTrans.push(groupedTransac)
+            })
+            let dateToFormat = newArrayOfTrans.flat()[0].t_date
+            return newArrayOfTrans.flat()
+        }
+    }
+
+    sortHandler = () => {
+        this.setState(prevState => {
+            return { sort: !prevState.sort }
+        })
+    }
+
+    searchHandler = (value) => {
+        this.setState({ searchVal: value })
+    }
 
     renderTransactions = (tList) => {
         return tList.map((trans, indx) => <Transaction key={indx} 
             transaction={trans} deleteHandler={this.props.deleteHandler}
-            editClickHandler={this.editClickHandler}/>)
+            editClickHandler={this.editClickHandler}
+            categories={this.props.credit_categories.concat(this.props.debit_categories)}/>)
     }
 
     transactionBtnHandler = (e) => {
+        console.log('button Id: ', e.target)
         const buttonId = e.target.id
         this.setState(() => {
             if(buttonId === "expBtnClicked"){

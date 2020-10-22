@@ -21,18 +21,21 @@ class TransForm extends React.Component {
                 placeholder="Amount" 
                 value={this.state.amount}
                 onChange={this.changeHandler}/>
-            <input type="text" 
+            <input className="transac-name"type="text" 
                 name="name" 
                 placeholder="Transaction Name" 
                 value={this.state.name}
                 onChange={this.changeHandler}/>
-            <label htmlFor="category">Category</label>
-            <select name="category_id" 
+            {/* <label htmlFor="category">Category</label> */}
+            <select className="select" name="category_id" 
                 value={this.state.category_id} 
                 onChange={this.changeHandler}>
+                <option>Category</option>
                 {this.setCategories()}
             </select>
-            <input type="submit"/>
+            <div className="submit-btn">
+                <input type="submit"/>
+            </div>
             <h3 onClick={this.props.hideForm}>x</h3>
         </form>)
     }
