@@ -50,6 +50,15 @@ class UserForm extends React.Component {
                         value={this.state.address ? this.state.address: ''} 
                         placeholder="Enter Address" 
                         onChange={this.changeHandler}/>
+                    {/* <select>
+                        <option value="Chase">Chase</option>
+                        <option value="Bank of America">Bank of America</option>
+                        <option value="CitiBank">CitiBank</option>
+                        <option value="Wells Fargo">Wells Fargo</option>
+                        <option value="TD Bank">TD Bank</option>
+                        <option value="Capital One">Capital One</option>
+                        <option value="HSBC">HSBC</option>
+                    </select> */}
                     <div className="submit-btn">
                         <input type="submit"/>
                     </div>

@@ -3,54 +3,31 @@ import React, {useState} from 'react'
 const BudgetForm = (props) => {    
 
     const [state, setState] = useState({
-        name: "",
-        amount: "",
-        budgets: [...props.budgets]
+        name: props.budgets[0].name,
+        amount: props.budgets[0].amount,
+        b_id: props.budgets[0].id
     })
 
     //--Fetch-Request-----------------------------------------------
-    const createCategory = (name, amount) => {
-        
-        let options ={
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                "accept": "application/json"
-            },
-            body: JSON.stringify({
-                budget: {
-                    name: name,
-                    amount: amount,
-                    category_id: 2,
-                    user_id: props.user_id
-                }
-            })
-        }
 
-        fetch(`http://localhost:3000/budgets`, options)
-        .then(resp=>resp.json())
-        .then(newBudget => {return(
-            {name: newBudget.name,
-            amount: newBudget.amount}
-        )})
-        .catch(console.log)
-    }
 
     const changeHandler = (e) => {
         return setState( {[e.target.name]: e.target.value })
     }
     const changeBudget = (e) => {
-        console.log(e.target.value)
-        let b_amount = props.budgets.filter(obj=>obj.name===e.target.value).map(ele=>ele.amount)[0]
+        let needed = e.target.value
+        let conv_id = parseInt(needed, 10) 
+        let b_amount = props.budgets.filter(obj=>obj.id===conv_id).map(ele=>ele.amount)[0]
+        let b_name = props.budgets.filter(obj=>obj.id===conv_id).map(ele=>ele.name)[0]
         return setState({
-            name: e.target.value,
-            amount: b_amount
+            name: b_name,
+            amount: b_amount,
+            b_id: conv_id
         })
     }
     const submitHandler = (e) => {
         e.preventDefault()
-        createCategory(e.target[0].value, e.target[1].value)
-        console.log(e.target[0].value)
+        props.createBudget(e.target[0].value, e.target[1].value, e.target[2].value)
     }
 
     const renderForm = () => {
@@ -58,17 +35,15 @@ const BudgetForm = (props) => {
             <form onSubmit={submitHandler}>
             <input type="text" name="name" placeholder="name" onChange={changeHandler} value={state.name}/>
             <input type="number" name="amount" placeholder="amount"onChange={changeHandler} value={state.amount}/>
-            <select value={state.name} onChange={changeBudget}>
+            <select value={state.b_id} onChange={changeBudget}>
                 {props.budgets.map(obj=> { return (
-                <option value={obj.name}>{obj.name}</option>
+                <option value={obj.id}>{obj.name}</option>
                 )})}
             </select>
             <input type="submit" /> 
         </form>)
     }
 
-    console.log("budgetform", state.name)
-    console.log("budgetformstate", state.budgets)
     return (
         renderForm()
     )

@@ -27,17 +27,17 @@ class BudgetComparison extends React.Component {
     renderBudgetForm = () => {
         return (
             <BudgerForm
-                budgets={this.props.info.budgets} user_id={this.props.info.id}
+                budgets={this.props.info.budgets} info={this.props.info} createBudget={this.props.createBudget}
             />)
     }
     renderBudgetAdder = () => {
         return (<div>
-        <button onClick={this.handleOpenModal}>Add Budget Target</button>
+        <button onClick={this.handleOpenModal}>Edit Budget Target</button>
         <ReactModal 
            isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example"
         >
-          <button onClick={this.handleCloseModal}>Close Budget Form</button>
+          <button onClick={this.handleCloseModal}>X</button>
             {this.renderBudgetForm()}
         </ReactModal>
       </div>)
@@ -118,7 +118,6 @@ class BudgetComparison extends React.Component {
 //--Render-Component------------------------------------------------
 
     render() {
-        console.log("id", this.state)
         return (
         <div>
         {this.renderBudgetAdder()}

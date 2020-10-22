@@ -24,11 +24,11 @@ class Transactions extends React.Component{
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <button onClick={this.handleOpenModal}>Add Category</button>
             <ReactModal 
-            isOpen={this.state.showModal}
-            contentLabel="Category Modal"
+                isOpen={this.state.showModal}
+                contentLabel="Category Modal"
             >
             <button onClick={this.handleCloseModal}>Close Form</button>
-            {this.renderCategoryForm()}
+                {this.renderCategoryForm()}
             </ReactModal>
             <hr/>
             { this.state.showForm ? 
@@ -57,7 +57,7 @@ class Transactions extends React.Component{
     }
 
     renderCategoryForm = () => {
-        return <CategoryForm />
+        return <CategoryForm createCategory={this.props.createCategory}/>
     }
     getTransactions = () => {
         let tList = this.props.transactions
@@ -116,7 +116,6 @@ class Transactions extends React.Component{
     }
 
     transactionBtnHandler = (e) => {
-        console.log('button Id: ', e.target)
         const buttonId = e.target.id
         this.setState(() => {
             if(buttonId === "expBtnClicked"){
