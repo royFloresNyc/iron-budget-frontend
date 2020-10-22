@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 const BudgetForm = (props) => {    
 
     const [state, setState] = useState({
         name: "",
         amount: "",
-        budgets: props.budgets
+        budgets: [...props.budgets]
     })
 
     //--Fetch-Request-----------------------------------------------
@@ -29,20 +29,19 @@ const BudgetForm = (props) => {
 
         fetch(`http://localhost:3000/budgets`, options)
         .then(resp=>resp.json())
-        .then(newBudget => setState(prevState=>{
-            return ({
-                budgets: [...prevState.budgets, newBudget]
-            })
-        }))
+        .then(newBudget => {return(
+            {name: newBudget.name,
+            amount: newBudget.amount}
+        )})
         .catch(console.log)
     }
 
     const changeHandler = (e) => {
-        setState( {[e.target.name]: e.target.value })
+        return setState( {[e.target.name]: e.target.value })
     }
     const changeBudget = (e) => {
         console.log(e.target.value)
-        let b_amount = state.budgets.filter(obj=>obj.name===e.target.value).map(ele=>ele.amount)[0]
+        let b_amount = props.budgets.filter(obj=>obj.name===e.target.value).map(ele=>ele.amount)[0]
         return setState({
             name: e.target.value,
             amount: b_amount
@@ -60,7 +59,7 @@ const BudgetForm = (props) => {
             <input type="text" name="name" placeholder="name" onChange={changeHandler} value={state.name}/>
             <input type="number" name="amount" placeholder="amount"onChange={changeHandler} value={state.amount}/>
             <select value={state.name} onChange={changeBudget}>
-                {state.budgets.map(obj=> { return (
+                {props.budgets.map(obj=> { return (
                 <option value={obj.name}>{obj.name}</option>
                 )})}
             </select>
@@ -69,7 +68,7 @@ const BudgetForm = (props) => {
     }
 
     console.log("budgetform", state.name)
-    console.log("budgetformstate", state.amount)
+    console.log("budgetformstate", state.budgets)
     return (
         renderForm()
     )

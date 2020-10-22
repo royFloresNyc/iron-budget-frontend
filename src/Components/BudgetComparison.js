@@ -32,7 +32,7 @@ class BudgetComparison extends React.Component {
     }
     renderBudgetAdder = () => {
         return (<div>
-        <button onClick={this.handleOpenModal}>Trigger Modal</button>
+        <button onClick={this.handleOpenModal}>Add Budget Target</button>
         <ReactModal 
            isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example"

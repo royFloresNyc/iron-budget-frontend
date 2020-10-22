@@ -16,6 +16,7 @@ class MainContainer extends React.Component {
     }
 
     render () {
+        console.log(this.state)
         const { id, username, first_name, last_name, address, account_balance, banks } = this.state
         const user = { id, username, first_name, last_name, address, account_balance, banks }
         return (

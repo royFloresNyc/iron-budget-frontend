@@ -2,6 +2,9 @@ import React from 'react'
 import TransButton from '../Components/TransButton'
 import TransForm from '../Components/TransForm'
 import Transaction from '../Components/Transaction'
+import ReactModal from 'react-modal'
+import CategoryForm from '../Components/CategoryForm'
+
 
 
 class Transactions extends React.Component{
@@ -16,6 +19,14 @@ class Transactions extends React.Component{
         return <div className="trans-container">
             <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
+            <button onClick={this.handleOpenModal}>Add Category</button>
+            <ReactModal 
+            isOpen={this.state.showModal}
+            contentLabel="Category Modal"
+            >
+            <button onClick={this.handleCloseModal}>Close Form</button>
+            {this.renderCategoryForm()}
+            </ReactModal>
             <hr/>
             { this.state.showForm ? 
                 <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
@@ -30,6 +41,18 @@ class Transactions extends React.Component{
                 {this.renderTransactions(this.props.transactions)}
             </div>
         </div>
+    }
+
+    handleOpenModal = () => {
+        this.setState({ showModal: true });
+    }
+  
+    handleCloseModal = () => {
+        this.setState({ showModal: false });
+    }
+
+    renderCategoryForm = () => {
+        return <CategoryForm />
     }
 
     renderTransactions = (tList) => {
