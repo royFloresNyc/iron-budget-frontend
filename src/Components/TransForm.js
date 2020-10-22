@@ -58,7 +58,8 @@ class TransForm extends React.Component {
         const transactionType = { transaction_type_id: e.target.id }
         const userId = { user_id: this.props.userId }
         const tObject = {...this.state, ...transactionType, ...userId}
-
+        tObject.amount = Number(tObject.amount)
+        
         this.props.transactionToEdit ? this.props.editHandler(tObject) : this.props.submitHandler(tObject)
 
         this.setState(() => {

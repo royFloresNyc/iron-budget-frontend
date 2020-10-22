@@ -9,7 +9,7 @@ const SidePanel = ({accountBalance, logOutHandler}) => {
             </div>
             <div className="account-balance">
                 <h3>Account Balance:</h3>
-                <h1>${accountBalance}</h1>
+                <h1>${accountBalance ? accountBalance.toFixed(2) : null}</h1>
             </div>
             <NavBar logOutHandler={logOutHandler}/>
         </div> 
