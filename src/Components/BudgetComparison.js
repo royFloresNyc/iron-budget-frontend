@@ -8,17 +8,10 @@ class BudgetComparison extends React.Component {
 //--State---------------------------------------------------
     state = {
         period : "2020-01",
-        showModal: false,
-        budgetNameToEdit: ""
+        showModal: false
     }
+
 //--Handlers----------------------------------------------------
-    changeBudget = (e) => {
-        console.log(e.target.value)
-        return this.setState({budgetToEdit: e.target.value})
-    }
-    changeHandler = (e) => {
-        return this.setState( {[e.target.name]: e.target.value })
-    }
     handleCheck = (value) => {
         return this.setState({period: value})
     }
@@ -30,12 +23,13 @@ class BudgetComparison extends React.Component {
         this.setState({ showModal: false });
     }
 //--Renders--------------------------------------------------
-renderBudgetForm = () => {
-    return (
-        <BudgerForm
-            budget={this.state.budgetToEdit}
-        />)
-}
+
+    renderBudgetForm = () => {
+        return (
+            <BudgerForm
+                budgets={this.props.info.budgets} user_id={this.props.info.id}
+            />)
+    }
     renderBudgetAdder = () => {
         return (<div>
         <button onClick={this.handleOpenModal}>Trigger Modal</button>
@@ -43,12 +37,7 @@ renderBudgetForm = () => {
            isOpen={this.state.showModal}
            contentLabel="Minimal Modal Example"
         >
-          <button onClick={this.handleCloseModal}>Close Modal</button>
-            <select value={this.state.budgetToEdit} onChange={this.changeBudget}>
-                {this.props.info.budgets.map(obj=> {return (
-                    <option value={obj.name}>{obj.name}</option>
-                )})}
-            </select>
+          <button onClick={this.handleCloseModal}>Close Budget Form</button>
             {this.renderBudgetForm()}
         </ReactModal>
       </div>)
@@ -126,9 +115,10 @@ renderBudgetForm = () => {
         let debits = this.props.info.budgets.map(obj=>obj.amount)
         return debits
     }
-//--Change-State------------------------------------------------
+//--Render-Component------------------------------------------------
 
     render() {
+        console.log("id", this.state)
         return (
         <div>
         {this.renderBudgetAdder()}
