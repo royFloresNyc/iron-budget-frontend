@@ -2,6 +2,9 @@ import React from 'react'
 import TransButton from '../Components/TransButton'
 import TransForm from '../Components/TransForm'
 import Transaction from '../Components/Transaction'
+import ReactModal from 'react-modal'
+import CategoryForm from '../Components/CategoryForm'
+
 import { SearchOrSortForm } from '../Components/SearchOrSortForm'
 
 
@@ -19,6 +22,15 @@ class Transactions extends React.Component{
         return <div className="trans-container">
             <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
             <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
+            <button onClick={this.handleOpenModal}>Add Category</button>
+            <ReactModal 
+                isOpen={this.state.showModal}
+                contentLabel="Category Modal"
+            >
+            <button onClick={this.handleCloseModal}>Close Form</button>
+                {this.renderCategoryForm()}
+            </ReactModal>
+            <hr/>
             { this.state.showForm ? 
                 <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
                     categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
@@ -36,6 +48,17 @@ class Transactions extends React.Component{
         </div>
     }
 
+    handleOpenModal = () => {
+        this.setState({ showModal: true });
+    }
+  
+    handleCloseModal = () => {
+        this.setState({ showModal: false });
+    }
+
+    renderCategoryForm = () => {
+        return <CategoryForm createCategory={this.props.createCategory}/>
+    }
     getTransactions = () => {
         let tList = this.props.transactions
         if(this.state.sort) {
@@ -93,7 +116,6 @@ class Transactions extends React.Component{
     }
 
     transactionBtnHandler = (e) => {
-        console.log('button Id: ', e.target)
         const buttonId = e.target.id
         this.setState(() => {
             if(buttonId === "expBtnClicked"){

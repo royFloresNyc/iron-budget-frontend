@@ -59,10 +59,10 @@ class BasicFinances extends React.Component {
                 datasets: [
                     {
                     label: 'Amount',
-                    backgroundColor: ['#2E8B57', '#FF0000'],
+                    backgroundColor: ['#FFFF00', '#FF0000'],
                     hoverBackgroundColor: [
-                        '#00FF7F',
-                        '#FF4500'
+                        '#f8f8f8',
+                        '#f8f8f8'
                     ],
                     data: this.getValues()
                     }
@@ -85,7 +85,6 @@ class BasicFinances extends React.Component {
     }
 
     render() {
-        console.log(' inside render in Basic Finances: ', this.props)
         return (
           <div>
             {this.renderDatePicker()}

@@ -50,13 +50,15 @@ class Projection extends React.Component {
                 labels: this.getLabels(),
                 datasets: [{
                     label: "Expenditure",
-                    backgroundColor: '#0BB2EB', 
+                    backgroundColor: '#0BB2EB',
+                    borderColor: '#0BB2EB',
                     data: this.getValues(),
                     fill: false,
                 },
                 {
                     label: "Projected",
                     backgroundColor: '#6D3535', 
+                    borderColor: '#6D3535',
                     data: this.getProjection(),
                     fill: false
                 }    

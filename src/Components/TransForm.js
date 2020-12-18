@@ -6,10 +6,11 @@ class TransForm extends React.Component {
         amount: "",
         t_date: "",
         category_id: "1",
+        showModal: false
     }
 
     render() {
-        return <form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
+        return (<form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
             <input type="date" 
                 name="t_date" 
                 placeholder="" 
@@ -36,8 +37,10 @@ class TransForm extends React.Component {
                 <input type="submit"/>
             </div>
             <h3 onClick={this.props.hideForm}>x</h3>
-        </form>
+        </form>)
     }
+
+
 
     componentDidMount = () => {
         if(this.props.transactionToEdit) {
