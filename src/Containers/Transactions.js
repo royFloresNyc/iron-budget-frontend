@@ -15,45 +15,14 @@ class Transactions extends React.Component{
         showForm: false,
         transactionToEdit: undefined,
         searchVal: '',
-        sort: false
+        sort: false,
+        showModal: false,
     }
 
-    render() {
-        return <div className="trans-container">
-            <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
-            <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
-            <button onClick={this.handleOpenModal}>Add Category</button>
-            <ReactModal 
-                isOpen={this.state.showModal}
-                contentLabel="Category Modal"
-            >
-            <button onClick={this.handleCloseModal}>Close Form</button>
-                {this.renderCategoryForm()}
-            </ReactModal>
-            <hr/>
-            { this.state.showForm ? 
-                <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
-                    categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
-                    submitHandler={this.props.submitHandler}
-                    editHandler={this.props.editHandler}
-                    hideForm={this.hideForm}
-                    transactionToEdit={this.state.transactionToEdit}
-                    userId={this.props.id} /> 
-                : 
-                <SearchOrSortForm searchVal={this.state.searchVal} searchHandler={this.searchHandler} sortHandler={this.sortHandler}/>
-            }
-            <div className="transactions">
-                {this.renderTransactions(this.getTransactions())}
-            </div>
-        </div>
-    }
-
-    handleOpenModal = () => {
-        this.setState({ showModal: true });
-    }
-  
-    handleCloseModal = () => {
-        this.setState({ showModal: false });
+    modalHandler = () => {
+        this.setState(prevState => {
+            return { showModal: !prevState.showModal }
+        })
     }
 
     renderCategoryForm = () => {
@@ -158,6 +127,36 @@ class Transactions extends React.Component{
                 transactionToEdit: transaction
             })
         }
+    }
+
+    render() {
+        return <div className="trans-container">
+            <TransButton text=" + Income" id="incmBtnClicked" clickHandler={this.transactionBtnHandler}/>
+            <TransButton text=" - Expense" id="expBtnClicked" clickHandler={this.transactionBtnHandler}/>
+            <hr/>
+            { this.state.showForm ? 
+                <TransForm typeId={this.state.expBtnClicked ? this.getTransactionTypeId("Debit") : this.getTransactionTypeId("Credit")}
+                    categories={this.state.expBtnClicked ? this.props.debit_categories : this.props.credit_categories}
+                    submitHandler={this.props.submitHandler}
+                    editHandler={this.props.editHandler}
+                    modalHandler={this.modalHandler}
+                    hideForm={this.hideForm}
+                    transactionToEdit={this.state.transactionToEdit}
+                    userId={this.props.id} /> 
+                : 
+                <SearchOrSortForm searchVal={this.state.searchVal} searchHandler={this.searchHandler} sortHandler={this.sortHandler}/>
+            }
+            <div className="transactions">
+                {this.renderTransactions(this.getTransactions())}
+            </div>
+            <ReactModal 
+                isOpen={this.state.showModal}
+                contentLabel="Category Modal"
+            >
+            <button onClick={this.modalHandler}>Close Form</button>
+                {this.renderCategoryForm()}
+            </ReactModal>
+        </div>
     }
 
 }

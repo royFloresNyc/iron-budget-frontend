@@ -6,38 +6,40 @@ class TransForm extends React.Component {
         amount: "",
         t_date: "",
         category_id: "1",
-        showModal: false
+        //showModal: false
     }
 
     render() {
-        return (<form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
-            <input type="date" 
-                name="t_date" 
-                placeholder="" 
-                value={this.state.t_date} 
-                onChange={this.changeHandler}/>
-            <input type="number" 
-                name="amount"
-                placeholder="Amount" 
-                value={this.state.amount}
-                onChange={this.changeHandler}/>
-            <input className="transac-name"type="text" 
-                name="name" 
-                placeholder="Transaction Name" 
-                value={this.state.name}
-                onChange={this.changeHandler}/>
-            {/* <label htmlFor="category">Category</label> */}
-            <select className="select" name="category_id" 
-                value={this.state.category_id} 
-                onChange={this.changeHandler}>
-                <option>Category</option>
-                {this.setCategories()}
-            </select>
-            <div className="submit-btn">
-                <input type="submit"/>
-            </div>
-            <h3 onClick={this.props.hideForm}>x</h3>
-        </form>)
+        return (
+            <form className="trans-form" id={this.props.typeId} onSubmit={this.localSubmitHandler}>
+                <input type="date" 
+                    name="t_date" 
+                    placeholder="" 
+                    value={this.state.t_date} 
+                    onChange={this.changeHandler}/>
+                <input type="number" 
+                    name="amount"
+                    placeholder="Amount" 
+                    value={this.state.amount}
+                    onChange={this.changeHandler}/>
+                <input className="transac-name"type="text" 
+                    name="name" 
+                    placeholder="Transaction Name" 
+                    value={this.state.name}
+                    onChange={this.changeHandler}/>
+                <select className="select" name="category_id" 
+                    value={this.state.category_id} 
+                    onChange={this.changeHandler}>
+                    <option>Category</option>
+                    {this.setCategories()}
+                </select>
+                <p onClick={this.props.modalHandler}><i>Add Category</i></p>
+                <div className="submit-btn">
+                    <input type="submit"/>
+                </div>
+                <h3 onClick={this.props.hideForm}>x</h3>
+            </form>
+        )
     }
 
 
