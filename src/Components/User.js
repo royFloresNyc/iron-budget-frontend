@@ -13,7 +13,7 @@ const User = ({ user }) => {
             <h4 className="user-detail">{`${user.first_name} ${user.last_name}`}</h4><br/>
             <p className="label">Address:</p>
             <h4 className="user-detail">{user.address}</h4><br/>
-            <p className="label">Username:</p>
+            <p className="label">Bank:</p>
             <h4 className="user-detail">{ user.banks ?  renderBankNames(user.banks) : null }</h4> 
         </div>
     )
