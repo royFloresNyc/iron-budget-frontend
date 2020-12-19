@@ -16,13 +16,14 @@ const CategoryForm = (props) => {
         return setState({transaction_type_id: e.target.value})
     }
     const renderForm = () => {
-        return (<form onSubmit={submitHandler}>
-            <input name="name" placeholder="name" value={state.name} onChange={changeHandler}/>
-            <select value={state.transaction_type_id} onChange={changeType}>
+        return (<form className="category-form" onSubmit={submitHandler}>
+            <input type="text" name="name" placeholder="Category Name" value={state.name} onChange={changeHandler}/>
+            <select className="select" value={state.transaction_type_id} onChange={changeType}>
                 <option value="1">Credit</option>
                 <option value="2">Debit</option>
             </select>
             <input type="submit"/>
+            <h3 onClick={props.modalHandler}>x</h3>
         </form>)
     }
 

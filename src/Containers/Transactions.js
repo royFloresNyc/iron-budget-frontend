@@ -26,8 +26,9 @@ class Transactions extends React.Component{
     }
 
     renderCategoryForm = () => {
-        return <CategoryForm createCategory={this.props.createCategory}/>
+        return 
     }
+
     getTransactions = () => {
         let tList = this.props.transactions
         if(this.state.sort) {
@@ -152,9 +153,16 @@ class Transactions extends React.Component{
             <ReactModal 
                 isOpen={this.state.showModal}
                 contentLabel="Category Modal"
+                style={{
+                    content: {
+                        top: '25vh',
+                        bottom: '60vh',
+                        left: '40vw',
+                        right: '20vw',
+                    }
+                 }}
             >
-            <button onClick={this.modalHandler}>Close Form</button>
-                {this.renderCategoryForm()}
+                <CategoryForm createCategory={this.props.createCategory} modalHandler={this.modalHandler}/>
             </ReactModal>
         </div>
     }

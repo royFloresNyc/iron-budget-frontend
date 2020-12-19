@@ -311,6 +311,9 @@ input[type="password"],
 input[type="number"],
 input[type="date"] {
   /* border: 2px solid rgb(61, 151, 247); */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   height: 20px;
   margin-right: 2px;
   margin-left: 2px;
@@ -351,13 +354,31 @@ form > p {
   cursor: pointer;
   display: block;
   color: darkgray;
-  font-size: 10px;
+  font-size: 12px;
   text-align: end;
-  margin-right: 70px;
+  margin-right: 65px;
 }
 
 form > p:hover {
   color: rgb(61, 151, 247);
+}
+
+.category-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.category-form > h3 {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.category-form > input[type="text"],
+.category-form > .select {
+  margin-right: 10px;
+  width: 200px;
 }
 
 /* ------------------------------------------------ Reports Nav Buttons-------------------------------- */
