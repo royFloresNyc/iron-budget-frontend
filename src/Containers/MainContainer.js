@@ -88,7 +88,7 @@ class MainContainer extends React.Component {
         fetch(`http://localhost:3000/budgets/${id}`, options)
         .then(resp=>resp.json())
         .then(new_budget => {
-            let newArr = [...this.state.budgets.filter(obj=>obj.id != id), new_budget]
+            let newArr = [...this.state.budgets.filter(obj=>obj.id !== id), new_budget]
             this.setState({budgets: newArr})
          })
         
@@ -129,8 +129,8 @@ class MainContainer extends React.Component {
         const url = 'http://localhost:3000/transactions'
         const fetchPromise = this.connectToDb(url, "POST", tObject)
         fetchPromise.then(data => {
-            console.log('data from db: ', data)
             const newArray = [data, ...this.state.transactions]
+            newArray.sort((transactA, transactB) => Date.parse(transactB.t_date) - Date.parse(transactA.t_date))
             const newBalance = this.getTotal(newArray)
             this.setState({ transactions:  newArray, account_balance: newBalance}) 
         })
