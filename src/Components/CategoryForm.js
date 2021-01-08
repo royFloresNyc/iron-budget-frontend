@@ -11,6 +11,7 @@ const CategoryForm = (props) => {
     const submitHandler = (e) => {
         e.preventDefault()
         props.createCategory(e.target[0].value, e.target[1].value)
+        props.modalHandler()
     }
     const changeType = (e) => {
         return setState({transaction_type_id: e.target.value})
