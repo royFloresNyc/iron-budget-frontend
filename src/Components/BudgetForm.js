@@ -32,15 +32,16 @@ const BudgetForm = (props) => {
 
     const renderForm = () => {
         return (
-            <form onSubmit={submitHandler}>
+            <form className="category-form" onSubmit={submitHandler}>
             <input type="text" name="name" placeholder="name" onChange={changeHandler} value={state.name}/>
             <input type="number" name="amount" placeholder="amount"onChange={changeHandler} value={state.amount}/>
-            <select value={state.b_id} onChange={changeBudget}>
+            <select className="select" value={state.b_id} onChange={changeBudget}>
                 {props.budgets.map(obj=> { return (
                 <option value={obj.id}>{obj.name}</option>
                 )})}
             </select>
             <input type="submit" /> 
+            <h3 onClick={props.closeModal}>x</h3>
         </form>)
     }
 
