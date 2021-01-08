@@ -3,14 +3,18 @@ import {Bar} from 'react-chartjs-2'
 import FilterBox from './FilterBox'
 import ReactModal from 'react-modal'
 import BudgerForm from './BudgetForm'
+import Spinner from 'react-bootstrap/Spinner'
 
 class BudgetComparison extends React.Component {
 //--State---------------------------------------------------
     state = {
-        period : "2020-01",
+        period : null,
         showModal: false
     }
-
+//-- Set Default Period -----------------------------------
+componentDidMount() {
+    this.setState({ period: this.props.periods[0].date})
+}
 //--Handlers----------------------------------------------------
     handleCheck = (value) => {
         return this.setState({period: value})
@@ -121,8 +125,8 @@ class BudgetComparison extends React.Component {
         return (
         <div>
         {this.renderBudgetAdder()}
-        {this.renderDatePicker()}
-        {this.renderBar()}
+        {this.state.period ? this.renderDatePicker() : null}
+        {this.state.period ? this.renderBar() : <Spinner animation="border" role="status"></Spinner>}
         </div>
         );
     }
