@@ -6,12 +6,14 @@ class UserForm extends React.Component {
         first_name: '',
         last_name: '',
         address: '',
+        bank: '',
     }
 
     componentDidMount = () => {
         let user = {...this.props.user}
         delete user.banks
         delete user.account_balance
+        user.bank = this.props.user.banks[0].name
         this.setState( user )
     }
 
@@ -27,6 +29,7 @@ class UserForm extends React.Component {
             first_name: '',
             last_name: '',
             address: '',
+            //bank: '',
         }, this.props.hideForm())
     }
 
@@ -49,6 +52,10 @@ class UserForm extends React.Component {
                     <input type="text" name="address" 
                         value={this.state.address ? this.state.address: ''} 
                         placeholder="Enter Address" 
+                        onChange={this.changeHandler}/>
+                    <input type="text" name="bank" 
+                        value={this.state.bank ? this.state.bank: ''} 
+                        placeholder="Enter Bank Name" 
                         onChange={this.changeHandler}/>
                     {/* <select>
                         <option value="Chase">Chase</option>
