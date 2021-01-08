@@ -1,14 +1,21 @@
 import React from 'react'
 import {Doughnut} from 'react-chartjs-2';
 import FilterBox from './FilterBox'
+import Spinner from 'react-bootstrap/Spinner'
 
 
 class Income extends React.Component {
 
 //--State-------------------------------------------------------
     state = {
-        period: "2020-01"
+        period: null
     }
+
+//-- Set Default Period -----------------------------------
+componentDidMount() {
+    this.setState({ period: this.props.periods[0].date})
+}
+
 //--Handlers----------------------------------------------------
     handleCheck = (value) => {
         return this.setState({period: value})
@@ -86,8 +93,8 @@ class Income extends React.Component {
     render() {
         return (
           <div>
-              {this.renderDatePicker()}
-              {this.renderIncomePie()}
+              {this.state.period ? this.renderDatePicker() : null}
+              {this.state.period ? this.renderIncomePie() : <Spinner animation="border" role="status"></Spinner>}
           </div>
         );
       }
