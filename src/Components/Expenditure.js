@@ -1,18 +1,23 @@
 import React from 'react'
 import {Doughnut} from 'react-chartjs-2';
 import FilterBox from './FilterBox'
+import Spinner from 'react-bootstrap/Spinner'
 
 
 class Expenditure extends React.Component {
 
 //--State---------------------------------------------------
     state = {
-        period: "2020-01"
+        period: null
+    }
+//-- Set Default Period -----------------------------------
+    componentDidMount() {
+        this.setState({ period: this.props.periods[0].date})
     }
 //--Handlers----------------------------------------------------
-handleCheck = (value) => {
-    return this.setState({period: value})
-}
+    handleCheck = (value) => {
+        return this.setState({period: value})
+    }
 //--Render------------------------------------------------------
     renderDatePicker = () => {
         return (
@@ -86,12 +91,12 @@ handleCheck = (value) => {
 
     render() {
         return (
-          <div>
-           {this.renderDatePicker()}
-           {this.renderExpPie()}
-          </div>
+            <div>
+                {this.state.period ? this.renderDatePicker() : null}
+                {this.state.period ? this.renderExpPie() : <Spinner animation="border" role="status"></Spinner>}
+            </div>
         );
-      }
+    }
 }
 
 export default Expenditure
