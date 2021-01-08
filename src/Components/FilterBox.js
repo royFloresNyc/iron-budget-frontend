@@ -14,8 +14,10 @@ const FilterBox = (props) => {
     }
 
     return (
-        <label for="transactions">Choose a transaction:</label>,
-        <select value={props.f_value} onChange={changehandler}>{renderOptions()}</select>
+        <>
+            <label className="report-select-label" for="transactions">{props.label}</label>
+            <select className="select" value={props.f_value} onChange={changehandler}>{renderOptions()}</select>
+        </>
     )
 }
 

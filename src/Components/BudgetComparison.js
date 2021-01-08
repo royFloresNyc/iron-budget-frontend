@@ -2,7 +2,7 @@ import React from 'react'
 import {Bar} from 'react-chartjs-2'
 import FilterBox from './FilterBox'
 import ReactModal from 'react-modal'
-import BudgerForm from './BudgetForm'
+import BudgetForm from './BudgetForm'
 import Spinner from 'react-bootstrap/Spinner'
 
 class BudgetComparison extends React.Component {
@@ -12,9 +12,9 @@ class BudgetComparison extends React.Component {
         showModal: false
     }
 //-- Set Default Period -----------------------------------
-componentDidMount() {
-    this.setState({ period: this.props.periods[0].date})
-}
+    componentDidMount() {
+        this.setState({ period: this.props.periods[0].date})
+    }
 //--Handlers----------------------------------------------------
     handleCheck = (value) => {
         return this.setState({period: value})
@@ -30,29 +30,41 @@ componentDidMount() {
 
     renderBudgetForm = () => {
         return (
-            <BudgerForm
+            <BudgetForm
+                closeModal={this.handleCloseModal}
                 budgets={this.props.info.budgets} info={this.props.info} createBudget={this.props.createBudget}
             />)
     }
     renderBudgetAdder = () => {
         return (<div>
-        <button onClick={this.handleOpenModal}>Edit Budget Target</button>
-        <ReactModal 
-           isOpen={this.state.showModal}
-           contentLabel="Minimal Modal Example"
-        >
-          <button onClick={this.handleCloseModal}>X</button>
-            {this.renderBudgetForm()}
-        </ReactModal>
-      </div>)
+            <button className="edit-budget-btn" onClick={this.handleOpenModal}>Edit Budget Target</button>
+            <ReactModal 
+                isOpen={this.state.showModal}
+                contentLabel="Minimal Modal Example"
+                style={{
+                    content: {
+                        top: '25vh',
+                        bottom: '60vh',
+                        left: '40vw',
+                        right: '20vw',
+                    }
+                }}
+            >
+                {this.renderBudgetForm()}
+            </ReactModal>
+        </div>)
     }
     renderDatePicker = () => {
         return (
-            <FilterBox
-                f_value={this.state.period}
-                changeState={this.handleCheck}
-                transactions={this.props.periods.map(obj=>obj.date)}
-            />)
+            <div className="report-select">
+                <FilterBox
+                    label="Select Month:"
+                    f_value={this.state.period}
+                    changeState={this.handleCheck}
+                    transactions={this.props.periods.map(obj=>obj.date)}
+                />
+            </div>
+        )
     }
     renderBar = () => {
         return (
@@ -80,7 +92,7 @@ componentDidMount() {
                 },
                 legend:{
                 display:true,
-                position:'right'
+                position:'bottom'
                 }
                 }}
             />
@@ -124,9 +136,9 @@ componentDidMount() {
     render() {
         return (
         <div>
-        {this.renderBudgetAdder()}
-        {this.state.period ? this.renderDatePicker() : null}
-        {this.state.period ? this.renderBar() : <Spinner animation="border" role="status"></Spinner>}
+            {this.state.period ? this.renderBar() : <Spinner animation="border" role="status"></Spinner>}
+            {this.state.period ? this.renderDatePicker() : null}
+            {this.renderBudgetAdder()}
         </div>
         );
     }

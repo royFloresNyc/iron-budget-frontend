@@ -21,11 +21,15 @@ class Expenditure extends React.Component {
 //--Render------------------------------------------------------
     renderDatePicker = () => {
         return (
-            <FilterBox
-                f_value={this.state.period}
-                changeState={this.handleCheck}
-                transactions={this.props.periods.map(obj=>obj.date)}
-            />)
+            <div className="report-select">
+                <FilterBox
+                    label="Select Month:"
+                    f_value={this.state.period}
+                    changeState={this.handleCheck}
+                    transactions={this.props.periods.map(obj=>obj.date)}
+                />
+            </div>
+        )
     }
     renderExpPie = () => {
         return (
@@ -51,7 +55,7 @@ class Expenditure extends React.Component {
             },
             legend:{
               display:true,
-              position:'right'
+              position:'bottom'
             }
           }}
         />
@@ -92,8 +96,8 @@ class Expenditure extends React.Component {
     render() {
         return (
             <div>
-                {this.state.period ? this.renderDatePicker() : null}
                 {this.state.period ? this.renderExpPie() : <Spinner animation="border" role="status"></Spinner>}
+                {this.state.period ? this.renderDatePicker() : null}
             </div>
         );
     }

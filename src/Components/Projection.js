@@ -34,12 +34,17 @@ class Projection extends React.Component {
     //--Renders-----------------------------------------------------
         renderFilter = () => {
             return (
-                <FilterBox
-                    f_value={this.state.transact_name}
-                    changeState={this.handleCheck}
-                    transactions={this.props.periods.map(obj=>obj.values).flat().filter(f=>f.category.transaction_type_id === 2).map(ele=>ele.category.name)}
-                />)
-            }
+                <div className="report-select">
+                    <FilterBox
+                        label="Select Expenditure:"
+                        f_value={this.state.transact_name}
+                        changeState={this.handleCheck}
+                        transactions={this.props.periods.map(obj=>obj.values).flat().filter(f=>f.category.transaction_type_id === 2).map(ele=>ele.category.name)}
+                    />
+                </div>
+            )
+        }
+
         renderProjection = () => {
            if(this.getProjection() === null){
            return <h3>Not Enough Data for <strong>{this.state.transact_name}</strong></h3>
@@ -79,7 +84,7 @@ class Projection extends React.Component {
             },
             legend:{
                 display:true,
-                position:'right'
+                position:'bottom'
             }
             }}
         />}
@@ -88,8 +93,8 @@ class Projection extends React.Component {
         render() {
             return (
                 <div>
-                  {this.renderFilter()}
                   {this.renderProjection()}
+                  {this.renderFilter()}
                 </div>
             );
         }

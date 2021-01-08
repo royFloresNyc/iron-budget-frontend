@@ -23,11 +23,15 @@ componentDidMount() {
 //--Render------------------------------------------------------
     renderDatePicker = () => {
         return (
-            <FilterBox
-                f_value={this.state.period}
-                changeState={this.handleCheck}
-                transactions={this.props.periods.map(obj=>obj.date)}
-            />)
+            <div className="report-select">
+                <FilterBox
+                    label="Select Month:"
+                    f_value={this.state.period}
+                    changeState={this.handleCheck}
+                    transactions={this.props.periods.map(obj=>obj.date)}
+                />
+            </div>
+        )
     }
     renderIncomePie = () => {
         return (<Doughnut
@@ -54,7 +58,7 @@ componentDidMount() {
         },
         legend:{
         display:true,
-        position:'right'
+        position:'bottom'
         }
         }}
         />)
@@ -93,8 +97,8 @@ componentDidMount() {
     render() {
         return (
           <div>
-              {this.state.period ? this.renderDatePicker() : null}
               {this.state.period ? this.renderIncomePie() : <Spinner animation="border" role="status"></Spinner>}
+              {this.state.period ? this.renderDatePicker() : null}
           </div>
         );
       }
