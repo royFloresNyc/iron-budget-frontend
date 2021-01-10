@@ -28,6 +28,7 @@ const BudgetForm = (props) => {
     const submitHandler = (e) => {
         e.preventDefault()
         props.createBudget(e.target[0].value, e.target[1].value, e.target[2].value)
+        props.closeModal()
     }
 
     const renderForm = () => {

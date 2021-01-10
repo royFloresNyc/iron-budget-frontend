@@ -6,7 +6,7 @@ class Projection extends React.Component {
 
     //--State---------------------------------------------------
         state = {
-            transact_name: "Groceries",
+            transact_name: "Miscellaneous",
             checked: false 
         }
     //--Handlers----------------------------------------------------

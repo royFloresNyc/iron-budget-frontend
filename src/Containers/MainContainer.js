@@ -88,8 +88,12 @@ class MainContainer extends React.Component {
         fetch(`http://localhost:3000/budgets/${id}`, options)
         .then(resp=>resp.json())
         .then(new_budget => {
-            let newArr = [...this.state.budgets.filter(obj=>obj.id !== id), new_budget]
-            this.setState({budgets: newArr})
+            // let newArr = [...this.state.budgets.filter(obj=>obj.id !== id), new_budget]
+            // this.setState({budgets: newArr})
+            let budgetsArr = this.state.budgets
+            let indexOfBudget = budgetsArr.findIndex((budget) => budget.id === new_budget.id)
+            budgetsArr[indexOfBudget] = new_budget
+            this.setState({budgets: budgetsArr})
          })
         
     }
