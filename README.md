@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-- [Back-end API](iron-budget-backend-api)
+- [Back-end API](https://github.com/royFloresNyc/iron-budget-backend-api)
 - npm >= 6.0.0
 - node >= 12.0.0
 
